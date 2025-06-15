@@ -1,5 +1,6 @@
 ---
 title: "Data Cleaning Example- cl_02"
+date: "2025-06-14"
 format: html
 execute:
   warning: false
