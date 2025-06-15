@@ -1,0 +1,111 @@
+# Create styles.css file using R
+
+# CSS content as a character vector
+css_content <- '
+/* styles.css - Custom styling for your Quarto website */
+
+/* Improve sidebar styling */
+.sidebar {
+  border-right: 2px solid #e9ecef;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar .sidebar-item {
+  margin: 0.25rem 0;
+}
+
+.sidebar .sidebar-item .sidebar-item-text {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+.sidebar .sidebar-item .sidebar-item-text:hover {
+  background-color: #f8f9fa;
+  color: #0d6efd;
+}
+
+/* Style section headers in sidebar */
+.sidebar .sidebar-section .sidebar-section-text {
+  font-weight: 600;
+  color: #495057;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Improve code block styling */
+pre {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+/* Style tables */
+.table {
+  margin: 1.5rem 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.table th {
+  background-color: #e9ecef;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+/* Improve heading spacing */
+h1, h2, h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  border-bottom: 3px solid #0d6efd;
+  padding-bottom: 0.5rem;
+}
+
+h2 {
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 0.25rem;
+}
+
+/* Add some visual flair to callout boxes */
+.callout {
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin: 1.5rem 0;
+}
+
+/* Style the main content area */
+.page-main {
+  max-width: none;
+}
+
+/* Improve navigation breadcrumbs if used */
+.breadcrumb {
+  background-color: transparent;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: "›";
+  color: #6c757d;
+}
+'
+
+# Write the CSS content to styles.css file
+writeLines(css_content, "styles.css")
+
+# Check if the file was created successfully
+cat("CSS file created:", file.exists("styles.css"), "\n")
+
+# Show the first few lines to verify
+cat("First few lines of styles.css:\n")
+cat(readLines("styles.css", n = 10), sep = "\n")
