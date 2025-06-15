@@ -1,5 +1,33 @@
 [
   {
+    "objectID": "an_01.html",
+    "href": "an_01.html",
+    "title": "Data Analysis (an_01)",
+    "section": "",
+    "text": "For this file, your goal is to:\n\nRun the most fundamental analysis that supports your core research question\nSave the regression results in LaTeX format for easy integration into your report or paper"
+  },
+  {
+    "objectID": "an_01.html#purpose",
+    "href": "an_01.html#purpose",
+    "title": "Data Analysis (an_01)",
+    "section": "",
+    "text": "For this file, your goal is to:\n\nRun the most fundamental analysis that supports your core research question\nSave the regression results in LaTeX format for easy integration into your report or paper"
+  },
+  {
+    "objectID": "an_01.html#construct-the-regression-formula",
+    "href": "an_01.html#construct-the-regression-formula",
+    "title": "Data Analysis (an_01)",
+    "section": "2 Construct the Regression Formula",
+    "text": "2 Construct the Regression Formula\n📌 The first thing you’ll want to do is set up a list of variables you’ll use in your analysis. That way, if you ever want to make changes, you only need to update it in one spot. We usually define this list as othervar near the bottom of cl_02. It’s a simple trick that makes your code more flexible—kind of like a “forward-looking” move, as economists might say.\n\ndata_2000 &lt;- read_csv(\"data/source/your cl_03 result.csv\")\n\nvarlist &lt;- c(\"cov_1\", \"cov_2\", \"cov_3\", ...)\n\nAfter you setting up this, you can start to write up your model\n\nformula_1 &lt;- paste(\"dep_var1 ~ ind_var1 + ind_var2 +\", varlist)\n\nmodel_1 &lt;- lm(formula_1, data = data_2000)\n\nformula_2 &lt;- paste(\"dep_var2 ~ ind_var1 + ind_var2 +\", varlist)\n\nmodel_2 &lt;- lm(formula_2, data = data_2000)\n\n📌 The models I’ve written here are just examples—you’re encouraged to define your own. You can use different variables, try alternative specifications, or even work with different datasets. The key is to present your comparisons clearly, so your audience can easily understand the point you’re trying to make."
+  },
+  {
+    "objectID": "an_01.html#generate-the-table",
+    "href": "an_01.html#generate-the-table",
+    "title": "Data Analysis (an_01)",
+    "section": "3 Generate the table",
+    "text": "3 Generate the table\n\nstargazer(model_1, model_2,\n          type = \"text\",  \n          # my personal habit is to store the table in text file\n          title = \"Basic Analysis\",\n          align = TRUE,\n          out = \"the name you assigned to the file of table\")\n\n📌 you can refer this guild in exploring how you can use this function to produce the tables."
+  },
+  {
     "objectID": "cl_00.html",
     "href": "cl_00.html",
     "title": "Data Extraction and Renaming (cl_00)",
@@ -21,15 +49,22 @@
     "text": "2 Setup\nWe’ll start by loading the required libraries for reading Stata, Excel, and csv files:\n\n# Load required libraries\nlibrary(haven)      # for reading/writing Stata files\nlibrary(openxlsx)   # for reading/writing xlsx files\nlibrary(readr)      # for reading/writing csv files\nlibrary(data.table) # good for large csv files\n\n\n2.1 Load the data and rename it\nMost datasets are available as .csv files, which we can use directly in R.\n📌 While R supports both .csv and .xlsx formats, .csv is generally preferred because it’s lightweight, universally compatible, and easier to integrate with other tools and platforms1.\n\n# Load the source IPUMS data file; for example, if I am working with data in 2000, I will directly name the file as 2000 or 2000_acs\ndata_2000 &lt;- read_csv(\"data/source/your_file_name_here.csv\")\n\n\nwrite_csv(data_2000, \"data/outcome/2000.csv\")\n\nIf the files are large, you can also choose to use fread\n\ndata_2000 &lt;- fread(\"data/source/your_file_name_here.csv\")\n\n\nfwrite(data_2000, \"data/outcome/2000.csv\")\n\nIf you have a list of files (I use BLS data as an example here), you can\n\nyears &lt;- c(2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022)\n\n# Loop through each year\nfor(year in years) {\n  \n  # Define file paths\n  input_file &lt;- paste0(\"data/source/QCEW/fast_food sector/\", year, \"_Limited-service restaurants.csv\")  #you will be list the name as the way they downloaded on your local\n  output_file &lt;- paste0(\"data/outcome/\", year, \"_bls.csv\")\n  \n  # Read CSV file\n  data &lt;- read_csv(input_file)\n  \n  # Save as CSV file with new name\n  write_csv(data, output_file)\n}"
   },
   {
-    "objectID": "cl_00.html#data-extraction-process",
-    "href": "cl_00.html#data-extraction-process",
+    "objectID": "cl_00.html#footnotes",
+    "href": "cl_00.html#footnotes",
     "title": "Data Extraction and Renaming (cl_00)",
-    "section": "3 Data Extraction Process",
-    "text": "3 Data Extraction Process\n\n3.1 Load Source Data\n\n# Load the source IPUMS data file\ndata_2000 &lt;- read_dta(\"data/source/your_file_name_here.dta\")\n\n\nwrite.xlsx(data_2000, \"data/outcome/2000.xlsx\")"
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nFor a comparison of .csv vs .xlsx in data workflows, see this LinkedIn article: CSV vs Excel: Pros and Cons↩︎"
   },
   {
     "objectID": "cl_01.html",
     "href": "cl_01.html",
+    "title": "Clean Allocated Values / Combine the datasets (cl_01)",
+    "section": "",
+    "text": "For this file, your goal is: 1. Remove allocated values that are not meaningful for further analysis 2. Merge or split datasets as needed to prepare for the next stage of cleaning and transformation"
+  },
+  {
+    "objectID": "cl_01.html#purpose",
+    "href": "cl_01.html#purpose",
     "title": "Clean Allocated Values / Combine the datasets (cl_01)",
     "section": "",
     "text": "For this file, your goal is: 1. Remove allocated values that are not meaningful for further analysis 2. Merge or split datasets as needed to prepare for the next stage of cleaning and transformation"
@@ -40,370 +75,6 @@
     "title": "Clean Allocated Values / Combine the datasets (cl_01)",
     "section": "2 Clean up all allocated values",
     "text": "2 Clean up all allocated values\n\n# Load data\ndata_2000 &lt;- read.xlsx(\"data/outcome/2000.dta\")\n\n# Define quality variable list\nqvarlist &lt;- c(\"var_1\", \"var_2\"...)\n\n# Remove observations where quality flags are greater than 3 (this is your to-go), then drop the quality variables\n# Note: Definitions for allocated values may vary by variable, so greater than 3 may not be universal, so always double-check the documentation.\n\nfor(qvar in qvarlist) {\n  if(qvar %in% names(data_2000)) {\n    data_2000 &lt;- data_2000 %&gt;%\n      filter(!!sym(qvar) &lt;= 3) %&gt;%\n      select(-!!sym(qvar))\n  }\n}\n\n# Save cleaned data\nwrite.xlsx(data_2000, \"data/outcome/2000_i.xlsx\")"
-  },
-  {
-    "objectID": "cl_02.html#replace-the-na-values-with-missing-values",
-    "href": "cl_02.html#replace-the-na-values-with-missing-values",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "3 Replace the N/A values with missing values",
-    "text": "3 Replace the N/A values with missing values\n\ndata_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(incwage = ifelse(incwage &gt;= 999999, NA, incwage))\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
-  },
-  {
-    "objectID": "cl_02.html#generate-a-variable-indicating-whether-or-not-the-individuals-wage-is-top-coded",
-    "href": "cl_02.html#generate-a-variable-indicating-whether-or-not-the-individuals-wage-is-top-coded",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "3 Generate a variable indicating whether or not the individual’s wage is top-coded",
-    "text": "3 Generate a variable indicating whether or not the individual’s wage is top-coded\nSimilarly, check the documentation to identify and correctly handle top-coded values.\n\ndata_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\n  data_2000_i &lt;- data_2000_i %&gt;%\n  mutate(topcoded = (incwage &gt;= 175000 & incwage &lt; 999999))\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
-  },
-  {
-    "objectID": "cl_02.html#adjust-the-wage-for-inflation-using-the-adjustment-factors-provided-by-ipums",
-    "href": "cl_02.html#adjust-the-wage-for-inflation-using-the-adjustment-factors-provided-by-ipums",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "4 Adjust the wage for inflation using the adjustment factors provided by IPUMS",
-    "text": "4 Adjust the wage for inflation using the adjustment factors provided by IPUMS\nSince the adjustment factor varies by year, you’ll need to check the appropriate CPI-U multiplier to convert dollar values to constant 1999 dollars. For other datasets, be sure to read the documentation carefully—some may already report inflation-adjusted amounts.\n\ndata_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\n  data_2000_i &lt;- data_2000_i %&gt;%\n  mutate(incwage = incwage * 1)\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
-  },
-  {
-    "objectID": "cl_02.html#recode-the-education-variable-and-generate-potential-experience",
-    "href": "cl_02.html#recode-the-education-variable-and-generate-potential-experience",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "5 Recode the education variable and generate potential experience",
-    "text": "5 Recode the education variable and generate potential experience\n\ndata_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\n# Own education\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(\n    schooling = case_when(\n      educd %in% c(0, 1, 2) ~ NA_real_,\n      educd == 10 ~ 2.5,\n      educd == 21 ~ 5.5,\n      educd == 24 ~ 7.5,\n      educd == 30 ~ 9,\n      educd == 40 ~ 10,\n      educd == 50 ~ 11,\n      educd %in% c(61, 62) ~ 12,\n      educd %in% c(65, 71) ~ 13,\n      educd == 81 ~ 14,\n      educd == 101 ~ 16,\n      educd == 114 ~ 18,\n      educd %in% c(115, 116) ~ 16,\n      TRUE ~ educd\n    ),\n    \n    # Own working experience\n    exp = age - schooling - 6,\n    exp = ifelse(exp &lt; 0, 0, exp),\n    exp2 = exp * exp,\n    \n    # Spousal Education\n    schooling_sp = case_when(\n      educd_sp %in% c(0, 1, 2) ~ NA_real_,\n      educd_sp == 10 ~ 2.5,\n      educd_sp == 21 ~ 5.5,\n      educd_sp == 24 ~ 7.5,\n      educd_sp == 30 ~ 9,\n      educd_sp == 40 ~ 10,\n      educd_sp == 50 ~ 11,\n      educd_sp %in% c(61, 62) ~ 12,\n      educd_sp %in% c(65, 71) ~ 13,\n      educd_sp == 81 ~ 14,\n      educd_sp == 101 ~ 16,\n      educd_sp == 114 ~ 18,\n      educd_sp %in% c(115, 116) ~ 16,\n      TRUE ~ educd_sp\n    )\n  )\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
-  },
-  {
-    "objectID": "cl_02.html#recode-the-weeks-usually-worked-and-generate-weekly-earnings",
-    "href": "cl_02.html#recode-the-weeks-usually-worked-and-generate-weekly-earnings",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "6 Recode the weeks usually worked and generate weekly earnings",
-    "text": "6 Recode the weeks usually worked and generate weekly earnings\n\ndata_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(\n    wkswork1 = ifelse(wkswork1 == 0, NA, wkswork1),\n    weeks = wkswork1,\n    wagewk = incwage / weeks\n  )\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
-  },
-  {
-    "objectID": "cl_02.html#generate-hourly-wage",
-    "href": "cl_02.html#generate-hourly-wage",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "7 Generate hourly wage",
-    "text": "7 Generate hourly wage\n\ndata_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(\n    uhrswork = ifelse(uhrswork == 0, NA, uhrswork),\n    topcoded_uhr = (uhrswork == 99),\n    wagehr = incwage / (weeks * uhrswork)\n  )\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
-  },
-  {
-    "objectID": "cl_02.html#generate-other-variables",
-    "href": "cl_02.html#generate-other-variables",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "5 Generate Other Variables",
-    "text": "5 Generate Other Variables\n📌 To generate consistent variables across multiple files, consider using a loop to automate the process.\nFor example, if I want to generate consistent definition of age group for my research for all the years, I can :\n\n# Define years to process\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\n# Loop through each year\nfor(i in years) {\n  \n  # Load data\n  data_i &lt;- read_dta(paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  # Generate age groups\n  data_i %&gt;%\n    mutate(\n      ageg = case_when(\n        age &gt;= 16 & age &lt;= 19 ~ 1,\n        age &gt;= 20 & age &lt;= 29 ~ 2,  \n        age &gt;= 30 & age &lt;= 39 ~ 3,\n        age &gt;= 40 & age &lt;= 49 ~ 4,\n        age &gt;= 50 & age &lt;= 59 ~ 5,\n        TRUE ~ NA_real_             #When none of above conditions are made\n      )\n    )\n  \n  # Save data\n  write_dta(data_i, paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  cat(\"Processed year\", i, \"- Age groups created\\n\")\n}\n\n  # 1: 16-19 years old\n  # 2: 20-29 years old \n  # 3: 30-39 years old\n  # 4: 40-49 years old\n  # 5: 50-59 years old"
-  },
-  {
-    "objectID": "cl_02.html#age-group",
-    "href": "cl_02.html#age-group",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "6 Age Group",
-    "text": "6 Age Group\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(\n    ageg = case_when(\n      age &gt;= 20 & age &lt;= 29 ~ 1,\n      age &gt;= 30 & age &lt;= 39 ~ 2,\n      age &gt;= 40 & age &lt;= 49 ~ 3,\n      age &gt;= 50 & age &lt;= 59 ~ 4,\n      TRUE ~ NA_real_\n    )\n  )\n\n# 1: 20-29\n# 2: 30-39\n# 3: 40-49\n# 4: 50-59"
-  },
-  {
-    "objectID": "cl_02.html#marital-status",
-    "href": "cl_02.html#marital-status",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "7 Marital Status",
-    "text": "7 Marital Status\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(\n    marr = case_when(\n      marst == 1 ~ 1,\n      marst &gt; 1 & marst &lt; 6 ~ NA_real_,\n      marst &gt; 6 | marst &lt; 1 ~ NA_real_,\n      TRUE ~ 0\n    )\n  )\n\n# 1: Currently married\n# 0: Not currently married (including cohabitating, \n#    but such cohabitating individuals will be included\n#    in our analysis)"
-  },
-  {
-    "objectID": "cl_02.html#have-a-child-under-age-5",
-    "href": "cl_02.html#have-a-child-under-age-5",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "7 Have a child under age 5",
-    "text": "7 Have a child under age 5\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(child5 = (nchlt5 &gt; 0))"
-  },
-  {
-    "objectID": "cl_02.html#gender",
-    "href": "cl_02.html#gender",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "8 Gender",
-    "text": "8 Gender\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(male = (sex == 1))"
-  },
-  {
-    "objectID": "cl_02.html#region",
-    "href": "cl_02.html#region",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "9 Region",
-    "text": "9 Region\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(\n    region = case_when(\n      region %in% c(11, 12, 13) ~ 1,\n      region %in% c(21, 22, 23) ~ 2,\n      region %in% c(31, 32, 33, 34) ~ 3,\n      region %in% c(41, 42, 43) ~ 4,\n      region %in% c(91, 92, 97, 99) ~ NA_real_,\n      TRUE ~ region\n    )\n  )\n\n# 1: Northeast \n# 2: Midwest \n# 3: South\n# 4: West"
-  },
-  {
-    "objectID": "cl_02.html#race",
-    "href": "cl_02.html#race",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "10 Race",
-    "text": "10 Race\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(\n    race = case_when(\n      race %in% c(4, 5, 6) ~ 4,\n      race == 7 ~ 5,\n      race %in% c(8, 9) ~ NA_real_,\n      TRUE ~ race\n    )\n  )\n\n# 1: White\n# 2: Black/African American\n# 3: American Indian or Alaska Native\n# 4: Chinese\n# 5: Japanese"
-  },
-  {
-    "objectID": "cl_02.html#keep-the-relevant-variables",
-    "href": "cl_02.html#keep-the-relevant-variables",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "6 Keep the relevant variables",
-    "text": "6 Keep the relevant variables\n\n  indvar &lt;- c(\"ind_var1\", \"ind_var2\",...)  # your independent variable, what we also called explanatory variable\n  depvar &lt;- c(\"dep_var1\", \"dep_var2\",...)  # your dependent variable\n  othervar &lt;- c(\"cov_1\", \"cov_2\",  ... )   # other covariates\n  pweight &lt;- c(\"perwt\")                     \n\n  all_vars &lt;- c(depvar, indvar, othervar, pweight)\n\n  data_2000_i &lt;- data_2000_i %&gt;%\n    select(all_of(all_vars))\n\nwrite_xlsx(data_2000_i, \"data/outcome/2000_pre.xlsx\")\n# we will call the result in this step as year_pre\n\n📌 The PERWT variable indicates how representative each observation is in reflecting the U.S. population. While it may not be available or necessary in every dataset, it’s important to look for this weighting factor.\n💭 Quick Question: What could happen to your analysis or results if you leave out this variable? Take a moment to think about the potential impact. In what situations might you not need to use this variable? 💡 hint: take a closer look at the definition of this variable.\n📌 In this section, you may have noticed heavy use of indentation. This is intentional—using tabs and consistent indentation is essential in the data cleaning process. It helps organize your code, improves readability, and makes debugging much easier.\nFor comparison, take a look at the two code examples below. Which one feels clearer or easier to read to you?\n\ndata_i %&gt;%\n    mutate(\n      ageg = case_when(\n        age &gt;= 16 & age &lt;= 19 ~ 1,\n        age &gt;= 20 & age &lt;= 29 ~ 2,  \n        age &gt;= 30 & age &lt;= 39 ~ 3,\n        age &gt;= 40 & age &lt;= 49 ~ 4,\n        age &gt;= 50 & age &lt;= 59 ~ 5,\n        TRUE ~ NA_real_             #When none of above conditions are made\n      )\n    )\n\n\ndata_i %&gt;%\nmutate(\nageg = case_when(\nage &gt;= 16 & age &lt;= 19 ~ 1,\nage &gt;= 20 & age &lt;= 29 ~ 2,  \nage &gt;= 30 & age &lt;= 39 ~ 3,\nage &gt;= 40 & age &lt;= 49 ~ 4,\nage &gt;= 50 & age &lt;= 59 ~ 5,\nTRUE ~ NA_real_             #When none of above conditions are made\n)\n)"
-  },
-  {
-    "objectID": "cl_02.html#example-2-to-merge-mothers-information",
-    "href": "cl_02.html#example-2-to-merge-mothers-information",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "12 Example 2: To merge mother’s information",
-    "text": "12 Example 2: To merge mother’s information\nFor this example, we are aiming to clean the fertility condition for the females, but these information are not straightforward In that case, we need to consider clean and identify the information by ourselves\n\nyears &lt;- c(1980, 1990)\n\nfor(year in years) {\n  # Load data\n  data_i &lt;- read_dta(paste0(\"data/outcome/\", year, \"_i.dta\"))\n  \n  # Sort by serial and birthyr\n  data_i %\n    arrange(serial, birthyr)\n  \n  # Generate birth order for children with mothers in household\n  data_i %\n    group_by(serial) %&gt;%\n    mutate(birth_order = ifelse(momloc != 0, row_number(), NA)) %&gt;%\n    ungroup()\n  \n  # Create indicator for child's sex (1 for male, 0 for female)\n  data_i %\n    mutate(male = ifelse(sex == 1, 1, 0))\n  \n  # Generate first child sex indicator (earliest birth year)\n  data_i %\n    group_by(serial) %&gt;%\n    mutate(\n      boy1st = case_when(\n        birth_order == 1 & male == 1 ~ 1,\n        birth_order == 1 & male == 0 ~ 0,\n        TRUE ~ NA_real_\n      )\n    ) %&gt;%\n    ungroup()\n  \n  # Generate second child sex indicator\n  data_i %\n    group_by(serial) %&gt;%\n    arrange(birth_order) %&gt;%\n    mutate(\n      boy2nd = case_when(\n        birth_order == 2 & male == 1 ~ 1,\n        birth_order == 2 & male == 0 ~ 0,\n        TRUE ~ NA_real_\n      )\n    ) %&gt;%\n    ungroup()\n  \n  # Save data\n  write_dta(data_i, paste0(\"data/outcome/\", year, \"_i.dta\"))\n}"
-  },
-  {
-    "objectID": "cl_02.html#identify-the-cases-that-the-number-of-children-in-the-household",
-    "href": "cl_02.html#identify-the-cases-that-the-number-of-children-in-the-household",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "13 Identify the cases that the number of children in the household",
-    "text": "13 Identify the cases that the number of children in the household\n\nfor(year in years) {\n  # Load data\n  data_i &lt;- read_dta(paste0(\"data/outcome/\", year, \"_i.dta\"))\n  \n  # Generate child indicator and count children per household\n  data_i %\n    mutate(is_child = ifelse(relate == 3, 1, 0)) %&gt;%\n    group_by(serial) %&gt;%\n    mutate(nchild_hh = sum(is_child, na.rm = TRUE)) %&gt;%\n    ungroup()\n  \n  # Save data\n  write_dta(data_i, paste0(\"data/outcome/\", year, \"_i.dta\"))\n}"
-  },
-  {
-    "objectID": "cl_02.html#age-at-the-first-birth",
-    "href": "cl_02.html#age-at-the-first-birth",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "14 Age at the first birth",
-    "text": "14 Age at the first birth\n\nfor(year in years) {\n  # Load data\n  data_i &lt;- read_dta(paste0(\"data/outcome/\", year, \"_i.dta\"))\n  \n  # Calculate age at first birth\n  data_i %\n    arrange(serial, birth_order) %&gt;%\n    group_by(serial) %&gt;%\n    mutate(\n      # Calculate age at first birth for first child\n      agefstm = case_when(\n        birth_order == 1 & !is.na(age_mom) & !is.na(age) ~ age_mom - age,\n        TRUE ~ NA_real_\n      )\n    ) %&gt;%\n    # Fill down the age at first birth for other children in same household\n    fill(agefstm, .direction = \"down\") %&gt;%\n    ungroup()\n  \n  # Save data\n  write_dta(data_i, paste0(\"data/outcome/\", year, \"_i.dta\"))\n}"
-  },
-  {
-    "objectID": "cl_02.html#example-3-geocode-the-locationstreet-address",
-    "href": "cl_02.html#example-3-geocode-the-locationstreet-address",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "15 Example 3: Geocode the location/street address",
-    "text": "15 Example 3: Geocode the location/street address\nGeocoding is the process of converting addresses or place names into geographic coordinates (latitude and longitude). This tutorial demonstrates how to use R to geocode addresses using Google’s Geocoding API."
-  },
-  {
-    "objectID": "cl_02.html#setup-and-prerequisites",
-    "href": "cl_02.html#setup-and-prerequisites",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "16 Setup and Prerequisites",
-    "text": "16 Setup and Prerequisites\n\n16.1 Step 1: Obtain Google Maps API Key\nBefore starting, you need to get a Google Maps API key:\n\nLog into your Google account\nAccess the Google Cloud Console: https://console.cloud.google.com/google/maps-apis/api-list\nSelect “Credentials” in the left sidebar\nCreate or copy your API key\nEnable the Geocoding API for your project\n\n\n\n16.2 Step 2: Load Required Libraries\n\n# Essential libraries for geocoding\nlibrary(ggmap)        # Main geocoding package\nlibrary(dplyr)        # Data manipulation\nlibrary(stringr)      # String operations\nlibrary(readr)        # Data import/export\nlibrary(purrr)        # Functional programming tools\n\n# Additional useful libraries\nlibrary(httr)         # HTTP requests\nlibrary(geosphere)    # Geographic calculations\nlibrary(ggplot2)      # Plotting\nlibrary(lubridate)    # Date/time operations\n\n\n\n16.3 Step 3: Install Development Version of ggmap\nThe CRAN version of ggmap may be outdated. Install the latest development version:\n\n# Install development version if needed\nif(!requireNamespace(\"devtools\")) install.packages(\"devtools\")\ndevtools::install_github(\"dkahle/ggmap\", ref = \"tidyup\")"
-  },
-  {
-    "objectID": "cl_02.html#setting-up-google-maps-api",
-    "href": "cl_02.html#setting-up-google-maps-api",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "17 Setting Up Google Maps API",
-    "text": "17 Setting Up Google Maps API\n\n17.1 Register Your API Key\n\n# Register your Google Maps API key\n# Replace \"YOUR_API_KEY_HERE\" with your actual API key\nregister_google(key = \"YOUR_API_KEY_HERE\")\n\n# Verify registration\nhas_google_key()\n\n\n\n17.2 Test API Connection\n\n# Simple test geocoding\ntest_address &lt;- \"1600 Pennsylvania Avenue NW, Washington, DC\"\ntest_result &lt;- geocode(test_address, output = \"more\")\nprint(test_result)"
-  },
-  {
-    "objectID": "cl_02.html#basic-geocoding-examples",
-    "href": "cl_02.html#basic-geocoding-examples",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "18 Basic Geocoding Examples",
-    "text": "18 Basic Geocoding Examples\n\n18.1 Single Address Geocoding\n\n# Geocode a single address\naddress &lt;- \"Harvard University, Cambridge, MA\"\n\n# Basic geocoding (returns lat/lon only)\ncoords_basic &lt;- geocode(address)\nprint(coords_basic)\n\n# Detailed geocoding (returns additional information)\ncoords_detailed &lt;- geocode(address, output = \"more\")\nprint(coords_detailed)\n\n\n\n18.2 Multiple Address Geocoding\n\n# Create sample data\naddresses %\n  mutate(\n    coords = map(location, ~ geocode(.x, output = \"more\")),\n    lat = map_dbl(coords, ~ .x$lat),\n    lon = map_dbl(coords, ~ .x$lon),\n    formatted_address = map_chr(coords, ~ .x$address)\n  ) %&gt;%\n  select(-coords)\n\nprint(addresses_geocoded)"
-  },
-  {
-    "objectID": "cl_02.html#advanced-geocoding-techniques",
-    "href": "cl_02.html#advanced-geocoding-techniques",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "19 Advanced Geocoding Techniques",
-    "text": "19 Advanced Geocoding Techniques\n\n19.1 Batch Geocoding with Error Handling\n\n# Function for safe geocoding with error handling\nsafe_geocode  0) Sys.sleep(delay)\n  }\n  \n  # Combine results\n  geocoded_results &lt;- bind_rows(results)\n  return(bind_cols(data, geocoded_results))\n}\n\n\n\n19.2 Handling API Rate Limits\n\n# Function to geocode with automatic retries and rate limiting\ngeocode_with_retry &lt;- function(address, max_retries = 3, delay = 1) {\n  for(attempt in 1:max_retries) {\n    tryCatch({\n      result &lt;- geocode(address, output = \"more\")\n      if(!is.na(result$lat)) {\n        return(result)\n      }\n    }, error = function(e) {\n      if(attempt &lt; max_retries) {\n        cat(\"Attempt\", attempt, \"failed. Retrying in\", delay, \"seconds...\\n\")\n        Sys.sleep(delay)\n        delay &lt;- delay * 2  # Exponential backoff\n      }\n    })\n  }\n  \n  # Return NA if all attempts failed\n  return(data.frame(lon = NA, lat = NA, address = NA))\n}"
-  },
-  {
-    "objectID": "cl_02.html#practical-example-geocoding-from-your-original-code",
-    "href": "cl_02.html#practical-example-geocoding-from-your-original-code",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "20 Practical Example: Geocoding from Your Original Code",
-    "text": "20 Practical Example: Geocoding from Your Original Code\n\n20.1 Reconstructed Example\n\n# Simulating your original data structure\n# Replace this with your actual data loading\nstop_Field_2017 &lt;- data.frame(\n  location = c(\n    \"Union Station\",\n    \"Capitol Hill\", \n    \"Georgetown\",\n    \"Dupont Circle\",\n    \"Adams Morgan\"\n  ),\n  stringsAsFactors = FALSE\n)\n\n# Geocoding loop (similar to your original approach)\ngeocoded_results &lt;- list()\n\nfor(i in 1:nrow(stop_Field_2017)) {\n  cat(\"Processing location\", i, \":\", stop_Field_2017$location[i], \"\\n\")\n  \n  # Create full address by adding DC\n  full_address &lt;- paste(stop_Field_2017$location[i], \"DC\")\n  \n  # Geocode with detailed output\n  result &lt;- geocode(\n    full_address, \n    timeout = 5000, \n    verbose = TRUE,\n    source = \"google\", \n    output = \"more\"\n  )\n  \n  # Store result\n  geocoded_results[[i]] &lt;- result\n  \n  # Add small delay to be respectful to API\n  Sys.sleep(0.2)\n}\n\n# Combine all results\nfinal_results &lt;- bind_rows(geocoded_results)\ncombined_data &lt;- bind_cols(stop_Field_2017, final_results)\n\nprint(combined_data)"
-  },
-  {
-    "objectID": "cl_02.html#quality-control-and-validation",
-    "href": "cl_02.html#quality-control-and-validation",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "21 Quality Control and Validation",
-    "text": "21 Quality Control and Validation\n\n21.1 Check Geocoding Quality\n\n# Function to assess geocoding quality\nassess_geocoding_quality %\n    summarise(\n      total_addresses = n(),\n      successful_geocodes = sum(!is.na(lat)),\n      success_rate = mean(!is.na(lat)) * 100,\n      missing_coordinates = sum(is.na(lat))\n    )\n  \n  return(quality_summary)\n}\n\n# Apply quality assessment\nquality_report &lt;- assess_geocoding_quality(combined_data)\nprint(quality_report)\n\n\n\n21.2 Visualize Results\n\n# Plot geocoded locations\nif(any(!is.na(combined_data$lat))) {\n  ggplot(combined_data, aes(x = lon, y = lat)) +\n    geom_point(color = \"red\", size = 3, alpha = 0.7) +\n    geom_text(aes(label = location), vjust = -1, size = 3) +\n    labs(\n      title = \"Geocoded Locations\",\n      x = \"Longitude\",\n      y = \"Latitude\"\n    ) +\n    theme_minimal()\n}"
-  },
-  {
-    "objectID": "cl_02.html#best-practices-and-tips",
-    "href": "cl_02.html#best-practices-and-tips",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "22 Best Practices and Tips",
-    "text": "22 Best Practices and Tips\n\n22.1 1. API Key Security\n\nNever hardcode API keys in scripts\nUse environment variables: Sys.getenv(\"GOOGLE_MAPS_API_KEY\")\nStore keys in .Renviron file\n\n\n\n22.2 2. Rate Limiting\n\nGoogle allows 50 requests per second for geocoding\nAdd delays between requests for large batches\nConsider using Sys.sleep() between geocoding calls\n\n\n\n22.3 3. Address Formatting\n\nBe consistent with address formats\nInclude city, state, and country when possible\nClean addresses before geocoding (remove special characters)\n\n\n\n22.4 4. Error Handling\n\nAlways include try-catch blocks for large batches\nSave intermediate results to avoid losing progress\nLog failed geocoding attempts for manual review\n\n\n\n22.5 5. Data Validation\n\nCheck for missing coordinates\nValidate coordinates are within expected geographic bounds\nReview geocoded addresses against original inputs"
-  },
-  {
-    "objectID": "cl_02.html#troubleshooting-common-issues",
-    "href": "cl_02.html#troubleshooting-common-issues",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "23 Troubleshooting Common Issues",
-    "text": "23 Troubleshooting Common Issues\n\n23.1 Issue 1: API Key Not Working\n# Check if API key is registered\nhas_google_key()\n\n# Re-register if needed\nregister_google(key = \"your-new-key\")\n\n\n23.2 Issue 2: Quota Exceeded\n# Implement exponential backoff\nSys.sleep(2^attempt)\n\n\n23.3 Issue 3: Poor Geocoding Results\n# Try different address formats\n# Add more geographic context (city, state, country)"
-  },
-  {
-    "objectID": "cl_02.html#summary",
-    "href": "cl_02.html#summary",
-    "title": "Data Cleaning Example- cl_02",
-    "section": "24 Summary",
-    "text": "24 Summary\nThis tutorial covered: - Setting up Google Maps API for geocoding - Basic and advanced geocoding techniques - Error handling and rate limiting - Quality control and validation - Best practices for production use\nRemember to always respect API terms of service and implement appropriate rate limiting for large-scale geocoding projects."
-  },
-  {
-    "objectID": "cl_03.html",
-    "href": "cl_03.html",
-    "title": "Sample Restrictions (cl_03)",
-    "section": "",
-    "text": "For this file, your goal is: 1. Filter the dataset to include only the observations relevant to your research question 2. Clean missing values by identifying and handling incomplete or unusable entries 3. Save a final, analysis-ready dataset that’s structured and scoped for your specific study"
-  },
-  {
-    "objectID": "cl_03.html#sample-restrictions",
-    "href": "cl_03.html#sample-restrictions",
-    "title": "Sample Restrictions (cl_03)",
-    "section": "1 Sample restrictions",
-    "text": "1 Sample restrictions\n\n# Load required libraries\nlibrary(haven)\nlibrary(dplyr)\n\ndata_2000_pre &lt;- read.xlsx(\"data/outcome/2000_pre.xlsx\")"
-  },
-  {
-    "objectID": "cl_03.html#age-restrictions",
-    "href": "cl_03.html#age-restrictions",
-    "title": "Sample Restrictions (cl_03)",
-    "section": "2 Age restrictions",
-    "text": "2 Age restrictions\n\n# To be consistent across years\n# Only individuals aged 20-59 are included\ndata_2000_pre &lt;- data_2000_pre %&gt;%\n  filter(age &gt;= 20 & age &lt;= 60)"
-  },
-  {
-    "objectID": "cl_03.html#group-quarters-restrictions",
-    "href": "cl_03.html#group-quarters-restrictions",
-    "title": "Sample Restrictions (cl_03)",
-    "section": "3 Group quarters restrictions",
-    "text": "3 Group quarters restrictions\n\n# Keep only certain group quarters\ndata_2000_pre &lt;- data_2000_pre %&gt;%\n  filter(gq %in% c(1, 2, 5))"
-  },
-  {
-    "objectID": "cl_03.html#employment-status-restrictions",
-    "href": "cl_03.html#employment-status-restrictions",
-    "title": "Sample Restrictions (cl_03)",
-    "section": "4 Employment status restrictions",
-    "text": "4 Employment status restrictions\n\n# Keep only employed individuals\ndata_2000_pre &lt;- data_2000_pre %&gt;%\n  filter(empstatd == 10)"
-  },
-  {
-    "objectID": "cl_03.html#self-employment-restrictions",
-    "href": "cl_03.html#self-employment-restrictions",
-    "title": "Sample Restrictions (cl_03)",
-    "section": "5 Self-employment restrictions",
-    "text": "5 Self-employment restrictions\n\n# Drop self-employed individuals\ndata_2000_pre &lt;- data_2000_pre %&gt;%\n  filter(selfemp != 1 | is.na(selfemp))"
-  },
-  {
-    "objectID": "cl_03.html#gender-restrictions",
-    "href": "cl_03.html#gender-restrictions",
-    "title": "Sample Restrictions (cl_03)",
-    "section": "6 Gender restrictions",
-    "text": "6 Gender restrictions\n\n# Sample is now restricted to males only\ndata_2000_pre &lt;- data_2000_pre %&gt;%\n  filter(male == 1)"
-  },
-  {
-    "objectID": "cl_03.html#income-restrictions",
-    "href": "cl_03.html#income-restrictions",
-    "title": "Sample Restrictions (cl_03)",
-    "section": "7 Income restrictions",
-    "text": "7 Income restrictions\n\n# Keep only individuals with positive income\ndata_2000_pre &lt;- data_2000_pre %&gt;%\n  filter(incwage &gt; 0)"
-  },
-  {
-    "objectID": "cl_03.html#missing-value-restrictions",
-    "href": "cl_03.html#missing-value-restrictions",
-    "title": "Sample Restrictions (cl_03)",
-    "section": "3 Missing value restrictions",
-    "text": "3 Missing value restrictions\n\n# Keep only individuals without missing values in the variables we need later\n\n  data_2000_pre &lt;- data_2000_pre %&gt;%\n    mutate(\n      touse = complete.cases(select(., incwage, schooling, schooling_sp, exp, exp2, \n                                   topcoded, topcoded_uhr, perwt, ageg, race, marr, \n                                   immigrant, region, statefip, origin, wagehr, wagewk))\n    ) %&gt;%\n    filter(touse)  # &lt;- Refined version"
-  },
-  {
-    "objectID": "cl_03.html#generate-log-wage",
-    "href": "cl_03.html#generate-log-wage",
-    "title": "Sample Restrictions (cl_03)",
-    "section": "4 Generate log wage",
-    "text": "4 Generate log wage\n\ndata_2000_pre &lt;- data_2000_pre %&gt;%\n  mutate(lnwage = log(incwage))\n\nwrite.xlsx(data_2000_pre, \"data/outcome/2000_final.xlsx\")"
-  },
-  {
-    "objectID": "example_1.html",
-    "href": "example_1.html",
-    "title": "example_1",
-    "section": "",
-    "text": "For this example, we’ll walk through a simplified replication exercise based on the paper “Does Compulsory School Attendance Affect Schooling and Earnings?” by Angrist and Krueger (1991). For this exercise, we’ll clean a dataset from the ACS to prepare it for studying the relationship between years of education and income. Since this paper used the birth quarter as the instrument as the years of the education, we will go through the practice of cleaning out year of birth and quarter of birth as well.\n\n\nFor this task, we’ll download data from IPUMS and split it by year. The purpose of this approach is to allow us to test the model’s significance separately for each individual year later on.\n\n# usa_00012 is the file name when you directly download from IPUMS\n\ndata_acs &lt;- read_csv(\"data/source/usa_00012.csv\")\n\n#Make sure the 'year' column is treated as a factor or numeric\ndata_acs$year &lt;- as.integer(data_acs$year)\n\n# Split the data into a list of datasets, one per year\n# Now data_by_year is a named list, e.g. data_by_year[[\"2001\"]], data_by_year[[\"2002\"]], etc.\n\ndata_by_year &lt;- split(data_acs, data_acs$year)\n\nfor (yr in names(data_by_year)) {\n  write.csv(data_by_year[[yr]], paste0(\"data/outcome/\", yr, \".csv\"), row.names = FALSE)\n}  \n\n\n\n\nIn this example, we need to work with 1980 data, which uses different set of allocated values compared to other years. Because of this, we handle the cleaning process for 1940 separately. This is also one of the main reasons we split the dataset by year in the first place— the more years of data we include, the more likely it is that coding differences or structural changes will occur across time.\n\n# Load 1980 data\ndata_1980 &lt;- read_csv(\"data/outcome/1980.csv\")\n\n#define the allocated values \nqvarlist &lt;- c(\"qage\", \"qmarst\", \"qsex\", \"qbpl\", \"qrace\", \"qeduc\", \n              \"qschool\", \"qclasswk\", \"qempstat\", \"quhrswor\", \n              \"qwkswork1\", \"qincwage\")\n\n\n# Process each variable in the list\nfor (i in qvarlist) {\n  # Drop observations where the variable value is greater than 3\n  # (equivalent to 'drop if `i'&gt;3')\n  data &lt;- data[data[[i]] &lt;= 3 | is.na(data[[i]]), ]\n  \n  # Drop the variable from the dataset\n  # (equivalent to 'drop `i'')\n  data &lt;- data[, !names(data) %in% i]\n}\n\n\n# Save cleaned 1980 data\nwrite_csv(data_1980, \"data/outcome/1980_i.csv\")\n\n\nyears &lt;- c(2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nqvarlist &lt;- c(\"qage\", \"qmarst\", \"qsex\", \"qbpl\", \"qrace\", \"qeduc\", \n              \"qschool\", \"qclasswk\", \"qempstat\", \"quhrswor\", \n              \"qwkswork1\", \"qincwage\")\n\n# Loop through each year (equivalent to 'foreach k in `r(numlist)'')\nfor (k in years) {\n  \n  # Load the data for current year (equivalent to 'use data/outcome/`k'.dta,clear')\n  data &lt;- read_dta(paste0(\"data/outcome/\", k, \".dta\"))\n  \n  # Process each variable in the list\n  for (i in qvarlist) {\n    # Drop observations where the variable value is greater than 3\n    # (equivalent to 'drop if `i'&gt;3')\n    data &lt;- data[data[[i]] &lt;= 3 | is.na(data[[i]]), ]\n    \n    # Drop the variable from the dataset\n    # (equivalent to 'drop `i'')\n    data &lt;- data[, !names(data) %in% i]\n  }\n  \n  # Save the processed data (equivalent to 'save data/outcome/`k'_i.dta,replace')\n  write_csv(data, paste0(\"data/outcome/\", k, \"_i.dta\"))\n}\n\n\n\n\nFor this dataset, our dependent variables will include: annual wage, weekly wage, and weeks worked in the previous year.\nThe key independent variables are: years of education, birth year, and birth quarter.\nAdditional demographic controls include: race, marital status, employment status, age group, working experience, and gender.\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\n# Loop through each year (equivalent to 'foreach i in `r(numlist)'')\nfor (i in years) {\n  \n  # Load the processed data (equivalent to 'use data/outcome/`i'_i,clear')\n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Replace incwage with missing value if &gt;= 999999\n  # (equivalent to 'replace incwage = . if incwage &gt;= 999999')\n  data$incwage[data$incwage &gt;= 999999] &lt;- NA\n  \n  # Save the data (equivalent to 'save data/outcome/`i'_i,replace')\n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  # Print progress (optional)\n  cat(\"Processed incwage for year:\", i, \"\\n\")\n}\n\n\n\n\nFor this variable, each year can have different definition for the topcode.\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\") %&gt;%\n  mutate(topcoded = as.numeric(incwage &gt;= 75000 & incwage &lt; 999999 & !is.na(incwage)))\n\n# For 2005  \ndata_2005 &lt;- read_csv(\"data/outcome/2005_i.csv\") %&gt;%\n  mutate(topcoded = as.numeric(incwage &gt;= 175000 & incwage &lt; 999999 & !is.na(incwage)))\n...\n\n\n\n\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\")\n\ndata_1980$incwage &lt;- data_1980$incwage * 2.314\n\nwrite_csv(data_1980, \"data/outcome/1980_i.csv\")\n\ndata_2005 &lt;- read.csv(\"data/outcome/2005_i.csv\")\n\ndata_2005$incwage &lt;- data_2005$incwage * 0.853\n\nwrite.csv(data_2005, \"data/outcome/2005_i.csv\", row.names = FALSE)\n\n...\n\n\n\n\nAs mentioned earlier in the data access section, maintaining consistency of variables across years is important. This is a good example: the variable for years of education completed isn’t directly available in the ACS. Instead, we can use two closely related variables as proxies: highgrade(the highest grade of schooling, easy to clean for years of education, but not available after 1980) and educ(the education attainment, it is available for more years, but harder to clean).\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\")\n\n  data_1980$higrade[data_1980$higrade == 0] &lt;- NA\n  data_1980$higrade[data_1980$higrade %in% c(1, 2, 3)] &lt;- 0\n\n# Generate schooling variable (equivalent to 'g schooling = higrade')\n  data_1980$schooling &lt;- data_1980$higrade\n\n# Adjust schooling (equivalent to 'replace schooling = schooling - 3 if schooling&gt;3')\n  data_1980$schooling[data_1980$schooling &gt; 3 & !is.na(data_1980$schooling)] &lt;- \n  data_1980$schooling[data_1980$schooling &gt; 3 & !is.na(data_1980$schooling)] - 3\n\n# Generate experience (equivalent to 'g exp = age - schooling - 6')\n  data_1980$exp &lt;- data_1980$age - data_1980$schooling - 6\n\n# Replace negative experience with 0 \n  data_1980$exp[data_1980$exp &lt; 0 & !is.na(data_1980$exp)] &lt;- 0\n\n# Generate experience squared \n  data_1980$exp2 &lt;- data_1980$exp * data_1980$exp\n\n# Generate age squared \n  data_1980$age2 &lt;- data_1980$age * data_1980$age\n\n# Save the data (equivalent to 'save data/outcome/1980_i,replace')\n  write_csv(data_1980, \"data/outcome/1980_i.csv\")\n\n\nyears &lt;- c(2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_dta(paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  # Generate schooling from educd \n  data$schooling &lt;- data$educd\n  \n  # Recode schooling values \n  schooling_map &lt;- c(\n  \"0\" = NA, \"1\" = NA, \"2\" = NA,\n  \"10\" = 2.5, \"21\" = 5.5, \"24\" = 7.5, \"30\" = 9,\n  \"40\" = 10, \"50\" = 11, \"61\" = 12, \"62\" = 12, \"63\" = 12, \"64\" = 12,\n  \"65\" = 13, \"71\" = 13, \"81\" = 14, \"101\" = 16, \"114\" = 18, \"115\" = 16, \"116\" = 16\n)\n  \n  data$schooling &lt;- schooling_map[as.character(data$educd)]\n  \n  data$exp &lt;- data$age - data$schooling - 6\n  \n  data$exp[data$exp &lt; 0 & !is.na(data$exp)] &lt;- 0\n  \n  data$exp2 &lt;- data$exp * data$exp\n  \n  data$age2 &lt;- data$age * data$age\n  \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n}\n\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\n# ****************************************************\n# Generate weekly wage\n# ****************************************************\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Recode wkswork1 \n  data$wkswork1[data$wkswork1 == 0] &lt;- NA\n  \n  # Generate weeks variable \n  data$weeks &lt;- data$wkswork1\n  \n  # Generate weekly wage \n  data$wagewk &lt;- data$incwage / data$weeks\n  \n  # Save the data \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n}\n\n# ****************************************************\n# Generate hourly wage\n# ****************************************************\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Recode uhrswork \n  data$uhrswork[data$uhrswork == 0] &lt;- NA\n  \n  # Generate topcoded hours indicator \n  data$topcoded_uhr &lt;- as.numeric(data$uhrswork == 99 & !is.na(data$uhrswork))\n  \n  # Generate hourly wage \n  data$wagehr &lt;- data$incwage / (data$weeks * data$uhrswork)\n  \n  # Save the data \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n}\n\n💭 Exercise: Can you write the code to generate each individual’s year of birth and quarter of birth based on the available variables?\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \ndata &lt;- read_dta(paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n# ****************************************************\n# Marital Status\n# ****************************************************\n  \n    # Generate married indicator \n    data$marr &lt;- as.numeric(data$marst == 1 | data$marst == 2)\n  \n  \n# ****************************************************\n# Have a child under age 5\n# ****************************************************\n  \n   # Generate child under 5 indicator \n  data$child5 &lt;- as.numeric(data$nchlt5 &gt; 0 & !is.na(data$nchlt5))\n  \n  ...\n  \n# ****************************************************\n# Keep the relevant variables\n# ****************************************************\n  \n  # Define variable lists \n  indvar &lt;- c(\"schooling\", \"exp\", \"exp2\", \"topcoded\")\n  \n  depvar &lt;- c(\"incwage\", \"wagewk\", \"wagehr\")\n  \n  othervar &lt;- c(\"year\", \"sample\", \"serial\", \"pernum\",\n                \"gq\", \"statefip\", \"age\", \"ageg\", \"age2\",\n                \"marr\", \"child5\", ...)\n  \n  pweight &lt;- c(\"perwt\")\n  \n  # Combine all variables to keep\n  vars_to_keep &lt;- c(depvar, indvar, othervar, pweight)\n  \n  # Method 1: Shortest - direct subsetting with error handling\n  data_subset &lt;- data[, intersect(vars_to_keep, names(data)), drop = FALSE]\n  \n  # Save the data (equivalent to 'save data/outcome/`i'_pre,replace')\n  write_csv(data_subset, paste0(\"data/outcome/\", i, \"_pre.csv\"))\n\n}\n\n💭 The code above shows how to create a few demographic variables. Now, try extending it by generating the remaining ones—think about how you would code the rest based on the available data.\n\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_dta(paste0(\"data/outcome/\", i, \"_pre.dta\"))\n  \n  # if we limit the gender to male\n  data &lt;- data[data$male == 1 & !is.na(data$male), ]\n  \n  # keep only the individual with positive income\n  data &lt;- data[data$incwage &gt; 0 & !is.na(data$incwage), ]\n  \n  #touse the missing variables\n    data &lt;- data %&gt;%\n    mutate(\n      touse = complete.cases(select(., incwage, schooling, exp, exp2,\n                                   topcoded, perwt, ...))\n    ) %&gt;%\n    filter(touse)\n    \n  # If we want to have a unlinear model, you can post the log tranformation here \n\n  # Generate log wage \n  data$lnwage &lt;- log(data$incwage)\n    \n  write_dta(data, paste0(\"data/outcome/\", i, \"_final.dta\"))\n  \n}"
-  },
-  {
-    "objectID": "example_1.html#quarto",
-    "href": "example_1.html#quarto",
-    "title": "example_1",
-    "section": "",
-    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
-  },
-  {
-    "objectID": "example_1.html#running-code",
-    "href": "example_1.html#running-code",
-    "title": "example_1",
-    "section": "2 Running Code",
-    "text": "2 Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
-  },
-  {
-    "objectID": "example_2.html",
-    "href": "example_2.html",
-    "title": "example_2",
-    "section": "",
-    "text": "For this example, we are aiming to clean the fertility condition for the females, but these information are not straightforward In that case, we need to consider clean and identify the information by ourselves\n\nyears &lt;- c(1980, 1990)\n\nfor(year in years) {\n  # Load data\n  data_i &lt;- read_dta(paste0(\"data/outcome/\", year, \"_i.dta\"))\n  \n  # Sort by serial and birthyr\n  data_i %\n    arrange(serial, birthyr)\n  \n  # Generate birth order for children with mothers in household\n  data_i %\n    group_by(serial) %&gt;%\n    mutate(birth_order = ifelse(momloc != 0, row_number(), NA)) %&gt;%\n    ungroup()\n  \n  # Create indicator for child's sex (1 for male, 0 for female)\n  data_i %\n    mutate(male = ifelse(sex == 1, 1, 0))\n  \n  # Generate first child sex indicator (earliest birth year)\n  data_i %\n    group_by(serial) %&gt;%\n    mutate(\n      boy1st = case_when(\n        birth_order == 1 & male == 1 ~ 1,\n        birth_order == 1 & male == 0 ~ 0,\n        TRUE ~ NA_real_\n      )\n    ) %&gt;%\n    ungroup()\n  \n  # Generate second child sex indicator\n  data_i %\n    group_by(serial) %&gt;%\n    arrange(birth_order) %&gt;%\n    mutate(\n      boy2nd = case_when(\n        birth_order == 2 & male == 1 ~ 1,\n        birth_order == 2 & male == 0 ~ 0,\n        TRUE ~ NA_real_\n      )\n    ) %&gt;%\n    ungroup()\n  \n  # Save data\n  write_dta(data_i, paste0(\"data/outcome/\", year, \"_i.dta\"))\n}"
-  },
-  {
-    "objectID": "example_2.html#quarto",
-    "href": "example_2.html#quarto",
-    "title": "example_2",
-    "section": "",
-    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
-  },
-  {
-    "objectID": "example_2.html#running-code",
-    "href": "example_2.html#running-code",
-    "title": "example_2",
-    "section": "2 Running Code",
-    "text": "2 Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
-  },
-  {
-    "objectID": "data_organization.html#setup-_master",
-    "href": "data_organization.html#setup-_master",
-    "title": "Data Organization",
-    "section": "2 Setup: _master",
-    "text": "2 Setup: _master\nThe Functions of the basic packages\n\n# Data manipulation and transformation\nlibrary(dplyr)      # Grammar of data manipulation - filter, select, mutate, summarize, group_by\n\n# Data import/export\nlibrary(readr)      # Fast and user-friendly reading of rectangular data (CSV, TSV, etc.)\nlibrary(haven)      # Reading and writing data from statistical software (Stata, SPSS, SAS)\n\n# Data reshaping and tidying\nlibrary(tidyr)      # Tools for reshaping data - pivot_longer, pivot_wider, separate, unite\n\n# Data visualization\nlibrary(ggplot2)    # Grammar of graphics for creating complex, layered plots\n\n# Reproducible reporting\nlibrary(knitr)      # Dynamic report generation - combine R code with text\nlibrary(here)       # Portable file path construction relative to project root\nlibrary(quarto)     # Scientific publishing system for documents, presentations, websites\n\n\n2.1 Set working directory\nWe usually set this up in the master file, so the working directory only needs to be changed once. This makes it easier when submitting your code—reviewers can run everything without modifying multiple files.\n\n# change this to your local directory\nsetwd(\"/Users/zhaoxiaoxiao/Desktop/2000 Educ_Return_R\")"
-  },
-  {
-    "objectID": "data_organization.html#part-i-data-cleaning-process",
-    "href": "data_organization.html#part-i-data-cleaning-process",
-    "title": "Data Organization",
-    "section": "3 Part I: Data Cleaning Process",
-    "text": "3 Part I: Data Cleaning Process\n\n3.1 Step 1: Data Import and Renaming\nRename the dataset using a clear, descriptive name, and convert it to the desired format at this stage.\n\n# Execute data import and renaming script\nquarto_render(\"program/cl_00.qmd\")\n\n\n\n3.2 Step 2: Clean Allocated Values / Combine the datasets\nIn this step, we remove any allocated or imputed values to maintain data quality and transparency.\nIf the dataset does not contain allocated values, this step is used to merge multiple raw files—for example, when data comes in separate parts by geography or time.\n📌 Be sure to clearly document the merging logic and assumptions, especially if the source files were not designed to be combined automatically.\n\n# Clean up all allocated values\nquarto_render(\"program/cl_01.qmd\")\n\n\n\n3.3 Step 3: Variable Generation and Transformation\nThis is where most of the data cleaning happens—you’ll recode variables, create new ones, and keep only what you need for analysis.\n\n# Generate and keep relevant variables\nquarto_render(\"program/cl_02.qmd\")\n\nKey transformations include:\n\nMissing Value Treatment: Replace missing value codes into na\nTop-coding Indicator: Generate variable indicating whether the value is topcoded (for example, income)\nInflation Adjustment: Adjust for inflation using appropriate price indices (we ususally need this step when we talk about price and income)\nRecode and Create Variables: Convert categorical values to numeric, group variables, or build new ones for analysis.\nSave What You Need: Keep only the cleaned, final set of variables for modeling or visualization\n\n\n\n3.4 Step 4: Sample Restrictions\nApply sample restrictions to create the final analytical dataset.\n\n# Apply sample restrictions\nquarto_render(\"program/cl_03.qmd\")\n\nPurpose: Implement inclusion/exclusion criteria to define the population of interest."
-  },
-  {
-    "objectID": "data_organization.html#data-processing-summary",
-    "href": "data_organization.html#data-processing-summary",
-    "title": "Data Organization",
-    "section": "5 Data Processing Summary",
-    "text": "5 Data Processing Summary\nThe data cleaning process follows a systematic approach:\n\nRaw Data Import → Standardized file structure\nQuality Control → Remove problematic allocated values\n\nFeature Engineering → Create analysis variables\nSample Definition → Apply research-specific restrictions"
-  },
-  {
-    "objectID": "data_organization.html#file-structure",
-    "href": "data_organization.html#file-structure",
-    "title": "Data Organization",
-    "section": "6 File Structure",
-    "text": "6 File Structure\nproject/\n├── program/\n|   ├── _master.qmd  # Organize all the files under, set the main working directory\n│   ├── cl_00.qmd    # Data import and renaming\n│   ├── cl_01.qmd    # Clean allocated values\n│   ├── cl_02.qmd    # Variable generation\n│   ├── cl_03.qmd    # Sample restrictions\n|   ├── an_01.qmd    # This will be your basic model result\n|   └── ...          # Other model that you want to build\n├── data/\n|   ├── source     # storage of the raw datasets\n|   └── output     # storage of cleaned datasets\n├── log/           # storage of the results of data analysis \n├── graph/         # storage of graphs\n└── reference/     # reference of your research"
-  },
-  {
-    "objectID": "data_organization.html",
-    "href": "data_organization.html",
-    "title": "Data Organization",
-    "section": "",
-    "text": "The _master file serves as the central script that organizes all your data cleaning and analysis steps. In most research projects, you’ll eventually need to submit your code—having a well-structured master file ensures that reviewers (or your future self) can reproduce the results easily by running just one file."
-  },
-  {
-    "objectID": "data_organization.html#overview-of-the-data-cleaning-procedure-the-_master-file",
-    "href": "data_organization.html#overview-of-the-data-cleaning-procedure-the-_master-file",
-    "title": "Data Organization",
-    "section": "",
-    "text": "The _master file serves as the central script that organizes all your data cleaning and analysis steps. In most research projects, you’ll eventually need to submit your code—having a well-structured master file ensures that reviewers (or your future self) can reproduce the results easily by running just one file."
-  },
-  {
-    "objectID": "data_organization.html#setup",
-    "href": "data_organization.html#setup",
-    "title": "Data Organization",
-    "section": "2 Setup",
-    "text": "2 Setup\nThe Functions of the basic packages\n\n# Data manipulation and transformation\nlibrary(dplyr)      # Grammar of data manipulation - filter, select, mutate, summarize, group_by\n\n# Data import/export\nlibrary(readr)      # Fast and user-friendly reading of rectangular data (CSV, TSV, etc.)\nlibrary(haven)      # Reading and writing data from statistical software (Stata, SPSS, SAS)\n\n# Data reshaping and tidying\nlibrary(tidyr)      # Tools for reshaping data - pivot_longer, pivot_wider, separate, unite\n\n# Data visualization\nlibrary(ggplot2)    # Grammar of graphics for creating complex, layered plots\n\n# Reproducible reporting\nlibrary(knitr)      # Dynamic report generation - combine R code with text\nlibrary(here)       # Portable file path construction relative to project root\nlibrary(quarto)     # Scientific publishing system for documents, presentations, websites\n\n# Display the result of analysis \nlibrary(stragazer)  # Display the regression result clealy in latex format\n\n\n2.1 Set working directory\nWe typically define the working directory in the master file, so it only needs to be set once. This simplifies code submission—reviewers can run everything without adjusting multiple scripts.\n\n# change this to your local directory\nsetwd(\"/Users/zhaoxiaoxiao/Desktop/2000 Educ_Return_R\")"
-  },
-  {
-    "objectID": "data_organization.html#note",
-    "href": "data_organization.html#note",
-    "title": "Data Organization",
-    "section": "7 📌 Note",
-    "text": "7 📌 Note\n\nIf you’re working with more than one raw dataset, it’s good practice to create a separate cleaning script for each one. For example:\n\n\nquarto_render(\"program/cl_01_acs.qmd\")  # Load the acs data\n\nquarto_render(\"program/cl_01_cps.qmd\")  # Load the cps data\n\nIf the datasets need to be merged, write a dedicated merge script\n\nquarto_render(\"program/cl_04_merge.qmd\")\n\n\nYour _master script should do more than just run your code—it should also:\n\n\n\nDescribe the purpose of each cleaning and analysis file\nClearly label each stage of the workflow (e.g., cleaning, merging, modeling)\nHelp collaborators or reviewers understand the flow of your project at a glance"
-  },
-  {
-    "objectID": "cl_00.html#footnotes",
-    "href": "cl_00.html#footnotes",
-    "title": "Data Extraction and Renaming (cl_00)",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nFor a comparison of .csv vs .xlsx in data workflows, see this LinkedIn article: CSV vs Excel: Pros and Cons↩︎"
   },
   {
     "objectID": "cl_01.html#merging-the-values",
@@ -434,46 +105,46 @@
     "text": "2 🛠️ Key Code Examples for Data Cleaning\n\n2.1 Replace the N/A values with missing values\nFor example, in IPUMS, the INCWAGE variable uses values above 999998 to indicate missing data. During cleaning, we recode those values as NA to ensure proper handling in analysis.\n\ndata_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\n  data_2000_i &lt;- data_2000_i %&gt;%\n  mutate(incwage = ifelse(incwage &gt;= 999999, NA, incwage))\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
   },
   {
-    "objectID": "cl_03.html#purpose",
-    "href": "cl_03.html#purpose",
+    "objectID": "cl_02.html#generate-a-variable-indicating-whether-or-not-the-individuals-wage-is-top-coded",
+    "href": "cl_02.html#generate-a-variable-indicating-whether-or-not-the-individuals-wage-is-top-coded",
+    "title": "Data Cleaning Example- cl_02",
+    "section": "3 Generate a variable indicating whether or not the individual’s wage is top-coded",
+    "text": "3 Generate a variable indicating whether or not the individual’s wage is top-coded\nSimilarly, check the documentation to identify and correctly handle top-coded values.\n\ndata_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\n  data_2000_i &lt;- data_2000_i %&gt;%\n  mutate(topcoded = (incwage &gt;= 175000 & incwage &lt; 999999))\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
+  },
+  {
+    "objectID": "cl_02.html#adjust-the-wage-for-inflation-using-the-adjustment-factors-provided-by-ipums",
+    "href": "cl_02.html#adjust-the-wage-for-inflation-using-the-adjustment-factors-provided-by-ipums",
+    "title": "Data Cleaning Example- cl_02",
+    "section": "4 Adjust the wage for inflation using the adjustment factors provided by IPUMS",
+    "text": "4 Adjust the wage for inflation using the adjustment factors provided by IPUMS\nSince the adjustment factor varies by year, you’ll need to check the appropriate CPI-U multiplier to convert dollar values to constant 1999 dollars. For other datasets, be sure to read the documentation carefully—some may already report inflation-adjusted amounts.\n\ndata_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\n  data_2000_i &lt;- data_2000_i %&gt;%\n  mutate(incwage = incwage * 1)\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
+  },
+  {
+    "objectID": "cl_02.html#generate-other-variables",
+    "href": "cl_02.html#generate-other-variables",
+    "title": "Data Cleaning Example- cl_02",
+    "section": "5 Generate Other Variables",
+    "text": "5 Generate Other Variables\n📌 To generate consistent variables across multiple files, consider using a loop to automate the process.\nFor example, if I want to generate consistent definition of age group for my research for all the years, I can :\n\n# Define years to process\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\n# Loop through each year\nfor(i in years) {\n  \n  # Load data\n  data_i &lt;- read_dta(paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  # Generate age groups\n  data_i %&gt;%\n    mutate(\n      ageg = case_when(\n        age &gt;= 16 & age &lt;= 19 ~ 1,\n        age &gt;= 20 & age &lt;= 29 ~ 2,  \n        age &gt;= 30 & age &lt;= 39 ~ 3,\n        age &gt;= 40 & age &lt;= 49 ~ 4,\n        age &gt;= 50 & age &lt;= 59 ~ 5,\n        TRUE ~ NA_real_             #When none of above conditions are made\n      )\n    )\n  \n  # Save data\n  write_dta(data_i, paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  cat(\"Processed year\", i, \"- Age groups created\\n\")\n}\n\n  # 1: 16-19 years old\n  # 2: 20-29 years old \n  # 3: 30-39 years old\n  # 4: 40-49 years old\n  # 5: 50-59 years old"
+  },
+  {
+    "objectID": "cl_02.html#keep-the-relevant-variables",
+    "href": "cl_02.html#keep-the-relevant-variables",
+    "title": "Data Cleaning Example- cl_02",
+    "section": "6 Keep the relevant variables",
+    "text": "6 Keep the relevant variables\n\n  indvar &lt;- c(\"ind_var1\", \"ind_var2\",...)  # your independent variable, what we also called explanatory variable\n  depvar &lt;- c(\"dep_var1\", \"dep_var2\",...)  # your dependent variable\n  othervar &lt;- c(\"cov_1\", \"cov_2\",  ... )   # other covariates\n  pweight &lt;- c(\"perwt\")                     \n\n  all_vars &lt;- c(depvar, indvar, othervar, pweight)\n\n  data_2000_i &lt;- data_2000_i %&gt;%\n    select(all_of(all_vars))\n\nwrite_xlsx(data_2000_i, \"data/outcome/2000_pre.xlsx\")\n# we will call the result in this step as year_pre\n\n📌 The PERWT variable indicates how representative each observation is in reflecting the U.S. population. While it may not be available or necessary in every dataset, it’s important to look for this weighting factor.\n💭 Quick Question: What could happen to your analysis or results if you leave out this variable? Take a moment to think about the potential impact. In what situations might you not need to use this variable? 💡 hint: take a closer look at the definition of this variable.\n📌 In this section, you may have noticed heavy use of indentation. This is intentional—using tabs and consistent indentation is essential in the data cleaning process. It helps organize your code, improves readability, and makes debugging much easier.\nFor comparison, take a look at the two code examples below. Which one feels clearer or easier to read to you?\n\ndata_i %&gt;%\n    mutate(\n      ageg = case_when(\n        age &gt;= 16 & age &lt;= 19 ~ 1,\n        age &gt;= 20 & age &lt;= 29 ~ 2,  \n        age &gt;= 30 & age &lt;= 39 ~ 3,\n        age &gt;= 40 & age &lt;= 49 ~ 4,\n        age &gt;= 50 & age &lt;= 59 ~ 5,\n        TRUE ~ NA_real_             #When none of above conditions are made\n      )\n    )\n\n\ndata_i %&gt;%\nmutate(\nageg = case_when(\nage &gt;= 16 & age &lt;= 19 ~ 1,\nage &gt;= 20 & age &lt;= 29 ~ 2,  \nage &gt;= 30 & age &lt;= 39 ~ 3,\nage &gt;= 40 & age &lt;= 49 ~ 4,\nage &gt;= 50 & age &lt;= 59 ~ 5,\nTRUE ~ NA_real_             #When none of above conditions are made\n)\n)"
+  },
+  {
+    "objectID": "cl_03.html",
+    "href": "cl_03.html",
     "title": "Sample Restrictions (cl_03)",
     "section": "",
     "text": "For this file, your goal is: 1. Filter the dataset to include only the observations relevant to your research question 2. Clean missing values by identifying and handling incomplete or unusable entries 3. Save a final, analysis-ready dataset that’s structured and scoped for your specific study"
   },
   {
-    "objectID": "cl_01.html#purpose",
-    "href": "cl_01.html#purpose",
-    "title": "Clean Allocated Values / Combine the datasets (cl_01)",
+    "objectID": "cl_03.html#purpose",
+    "href": "cl_03.html#purpose",
+    "title": "Sample Restrictions (cl_03)",
     "section": "",
-    "text": "For this file, your goal is: 1. Remove allocated values that are not meaningful for further analysis 2. Merge or split datasets as needed to prepare for the next stage of cleaning and transformation"
-  },
-  {
-    "objectID": "data_organization.html#data-analyzing",
-    "href": "data_organization.html#data-analyzing",
-    "title": "Data Organization",
-    "section": "4 Data Analyzing",
-    "text": "4 Data Analyzing\n\n# Run your most basic analysis\nquarto_render(\"program/an_01.qmd\")"
-  },
-  {
-    "objectID": "an_01.html",
-    "href": "an_01.html",
-    "title": "Data Analysis (an_01)",
-    "section": "",
-    "text": "For this file, your goal is to:\n\nRun the most fundamental analysis that supports your core research question\nSave the regression results in LaTeX format for easy integration into your report or paper"
-  },
-  {
-    "objectID": "an_01.html#quarto",
-    "href": "an_01.html#quarto",
-    "title": "Data Analysis (an_01)",
-    "section": "",
-    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
-  },
-  {
-    "objectID": "an_01.html#running-code",
-    "href": "an_01.html#running-code",
-    "title": "Data Analysis (an_01)",
-    "section": "2 Running Code",
-    "text": "2 Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\nYou can add options to executable code like this\nThe echo: false option disables the printing of code (only output is displayed)."
+    "text": "For this file, your goal is: 1. Filter the dataset to include only the observations relevant to your research question 2. Clean missing values by identifying and handling incomplete or unusable entries 3. Save a final, analysis-ready dataset that’s structured and scoped for your specific study"
   },
   {
     "objectID": "cl_03.html#further-limitation",
@@ -483,6 +154,13 @@
     "text": "2 Further limitation\n\n# Load the dataset you cleaned \ndata_2000_pre &lt;- read.xlsx(\"data/outcome/2000_pre.xlsx\")\n\nApply any sample restrictions relevant to your analysis.\nFor example, a common one is to exclude individuals in group quarters.\nKeep only those living in households.\n\n  data_2000_pre &lt;- data_2000_pre %&gt;%\n    filter(gq %in% c(1, 2, 5))\n\n📌 You may have noticed that there are many variables you didn’t initially consider, but they turn out to be essential for your analysis. One example is Group Quarters (GQ)—a detail that can significantly affect interpretation but is easy to overlook.\n💭 Why might we want to set a limitation based on group quarters? Can you identify other variables that are often treated as “default” controls in empirical analysis?"
   },
   {
+    "objectID": "cl_03.html#missing-value-restrictions",
+    "href": "cl_03.html#missing-value-restrictions",
+    "title": "Sample Restrictions (cl_03)",
+    "section": "3 Missing value restrictions",
+    "text": "3 Missing value restrictions\n\n# Keep only individuals without missing values in the variables we need later\n\n  data_2000_pre &lt;- data_2000_pre %&gt;%\n    mutate(\n      touse = complete.cases(select(., incwage, schooling, schooling_sp, exp, exp2, \n                                   topcoded, topcoded_uhr, perwt, ageg, race, marr, \n                                   immigrant, region, statefip, origin, wagehr, wagewk))\n    ) %&gt;%\n    filter(touse)  # &lt;- Refined version"
+  },
+  {
     "objectID": "cl_03.html#save-the-final-dataset-for-analysis",
     "href": "cl_03.html#save-the-final-dataset-for-analysis",
     "title": "Sample Restrictions (cl_03)",
@@ -490,74 +168,81 @@
     "text": "4 Save the final dataset for Analysis\n\nwrite.xlsx(data_2000_pre, \"data/outcome/2000_final.xlsx\")"
   },
   {
-    "objectID": "an_01.html#purpose",
-    "href": "an_01.html#purpose",
-    "title": "Data Analysis (an_01)",
+    "objectID": "data_organization.html",
+    "href": "data_organization.html",
+    "title": "Data Organization",
     "section": "",
-    "text": "For this file, your goal is to:\n\nRun the most fundamental analysis that supports your core research question\nSave the regression results in LaTeX format for easy integration into your report or paper"
+    "text": "The _master file serves as the central script that organizes all your data cleaning and analysis steps. In most research projects, you’ll eventually need to submit your code—having a well-structured master file ensures that reviewers (or your future self) can reproduce the results easily by running just one file."
   },
   {
-    "objectID": "an_01.html#running-regression-and-save-the-model",
-    "href": "an_01.html#running-regression-and-save-the-model",
-    "title": "Data Analysis (an_01)",
-    "section": "2 Running regression and save the model",
-    "text": "2 Running regression and save the model\n📌 The first thing you’ll want to do is set up a list of variables you’ll use in your analysis. That way, if you ever want to make changes, you only need to update it in one spot. We usually define this list as othervar near the bottom of cl_02. It’s a simple trick that makes your code more flexible—kind of like a “forward-looking” move, as economists might say.\n\nvarlist &lt;- c(\"cov_1\", \"cov_2\", \"cov_3\", ...)\n\nYou can add options to executable code like this"
+    "objectID": "data_organization.html#overview-of-the-data-cleaning-procedure-the-_master-file",
+    "href": "data_organization.html#overview-of-the-data-cleaning-procedure-the-_master-file",
+    "title": "Data Organization",
+    "section": "",
+    "text": "The _master file serves as the central script that organizes all your data cleaning and analysis steps. In most research projects, you’ll eventually need to submit your code—having a well-structured master file ensures that reviewers (or your future self) can reproduce the results easily by running just one file."
   },
   {
-    "objectID": "an_01.html#construct-the-regression-formula",
-    "href": "an_01.html#construct-the-regression-formula",
-    "title": "Data Analysis (an_01)",
-    "section": "2 Construct the Regression Formula",
-    "text": "2 Construct the Regression Formula\n📌 The first thing you’ll want to do is set up a list of variables you’ll use in your analysis. That way, if you ever want to make changes, you only need to update it in one spot. We usually define this list as othervar near the bottom of cl_02. It’s a simple trick that makes your code more flexible—kind of like a “forward-looking” move, as economists might say.\n\ndata_2000 &lt;- read_csv(\"data/source/your cl_03 result.csv\")\n\nvarlist &lt;- c(\"cov_1\", \"cov_2\", \"cov_3\", ...)\n\nAfter you setting up this, you can start to write up your model\n\nformula_1 &lt;- paste(\"dep_var1 ~ ind_var1 + ind_var2 +\", varlist)\n\nmodel_1 &lt;- lm(formula_1, data = data_2000)\n\nformula_2 &lt;- paste(\"dep_var2 ~ ind_var1 + ind_var2 +\", varlist)\n\nmodel_2 &lt;- lm(formula_2, data = data_2000)\n\n📌 The models I’ve written here are just examples—you’re encouraged to define your own. You can use different variables, try alternative specifications, or even work with different datasets. The key is to present your comparisons clearly, so your audience can easily understand the point you’re trying to make."
+    "objectID": "data_organization.html#setup",
+    "href": "data_organization.html#setup",
+    "title": "Data Organization",
+    "section": "2 Setup",
+    "text": "2 Setup\nThe Functions of the basic packages\n\n# Data manipulation and transformation\nlibrary(dplyr)      # Grammar of data manipulation - filter, select, mutate, summarize, group_by\n\n# Data import/export\nlibrary(readr)      # Fast and user-friendly reading of rectangular data (CSV, TSV, etc.)\nlibrary(haven)      # Reading and writing data from statistical software (Stata, SPSS, SAS)\n\n# Data reshaping and tidying\nlibrary(tidyr)      # Tools for reshaping data - pivot_longer, pivot_wider, separate, unite\n\n# Data visualization\nlibrary(ggplot2)    # Grammar of graphics for creating complex, layered plots\n\n# Reproducible reporting\nlibrary(knitr)      # Dynamic report generation - combine R code with text\nlibrary(here)       # Portable file path construction relative to project root\nlibrary(quarto)     # Scientific publishing system for documents, presentations, websites\n\n# Display the result of analysis \nlibrary(stragazer)  # Display the regression result clealy in latex format\n\n\n2.1 Set working directory\nWe typically define the working directory in the master file, so it only needs to be set once. This simplifies code submission—reviewers can run everything without adjusting multiple scripts.\n\n# change this to your local directory\nsetwd(\"/Users/zhaoxiaoxiao/Desktop/2000 Educ_Return_R\")"
   },
   {
-    "objectID": "an_01.html#generate-the-table",
-    "href": "an_01.html#generate-the-table",
-    "title": "Data Analysis (an_01)",
-    "section": "3 Generate the table",
-    "text": "3 Generate the table\n\nstargazer(model_1, model_2,\n          type = \"text\",  \n          # my personal habit is to store the table in text file\n          title = \"Basic Analysis\",\n          align = TRUE,\n          out = \"the name you assigned to the file of table\")\n\n📌 you can refer this guild in exploring how you can use this function to produce the tables."
+    "objectID": "data_organization.html#part-i-data-cleaning-process",
+    "href": "data_organization.html#part-i-data-cleaning-process",
+    "title": "Data Organization",
+    "section": "3 Part I: Data Cleaning Process",
+    "text": "3 Part I: Data Cleaning Process\n\n3.1 Step 1: Data Import and Renaming\nRename the dataset using a clear, descriptive name, and convert it to the desired format at this stage.\n\n# Execute data import and renaming script\nquarto_render(\"program/cl_00.qmd\")\n\n\n\n3.2 Step 2: Clean Allocated Values / Combine the datasets\nIn this step, we remove any allocated or imputed values to maintain data quality and transparency.\nIf the dataset does not contain allocated values, this step is used to merge multiple raw files—for example, when data comes in separate parts by geography or time.\n📌 Be sure to clearly document the merging logic and assumptions, especially if the source files were not designed to be combined automatically.\n\n# Clean up all allocated values\nquarto_render(\"program/cl_01.qmd\")\n\n\n\n3.3 Step 3: Variable Generation and Transformation\nThis is where most of the data cleaning happens—you’ll recode variables, create new ones, and keep only what you need for analysis.\n\n# Generate and keep relevant variables\nquarto_render(\"program/cl_02.qmd\")\n\nKey transformations include:\n\nMissing Value Treatment: Replace missing value codes into na\nTop-coding Indicator: Generate variable indicating whether the value is topcoded (for example, income)\nInflation Adjustment: Adjust for inflation using appropriate price indices (we ususally need this step when we talk about price and income)\nRecode and Create Variables: Convert categorical values to numeric, group variables, or build new ones for analysis.\nSave What You Need: Keep only the cleaned, final set of variables for modeling or visualization\n\n\n\n3.4 Step 4: Sample Restrictions\nApply sample restrictions to create the final analytical dataset.\n\n# Apply sample restrictions\nquarto_render(\"program/cl_03.qmd\")\n\nPurpose: Implement inclusion/exclusion criteria to define the population of interest."
   },
   {
-    "objectID": "example_1.html#example-1-what-is-the-relationship-between-years-of-education-and-income",
-    "href": "example_1.html#example-1-what-is-the-relationship-between-years-of-education-and-income",
+    "objectID": "data_organization.html#data-analyzing",
+    "href": "data_organization.html#data-analyzing",
+    "title": "Data Organization",
+    "section": "4 Data Analyzing",
+    "text": "4 Data Analyzing\n\n# Run your most basic analysis\nquarto_render(\"program/an_01.qmd\")"
+  },
+  {
+    "objectID": "data_organization.html#data-processing-summary",
+    "href": "data_organization.html#data-processing-summary",
+    "title": "Data Organization",
+    "section": "5 Data Processing Summary",
+    "text": "5 Data Processing Summary\nThe data cleaning process follows a systematic approach:\n\nRaw Data Import → Standardized file structure\nQuality Control → Remove problematic allocated values\n\nFeature Engineering → Create analysis variables\nSample Definition → Apply research-specific restrictions"
+  },
+  {
+    "objectID": "data_organization.html#file-structure",
+    "href": "data_organization.html#file-structure",
+    "title": "Data Organization",
+    "section": "6 File Structure",
+    "text": "6 File Structure\nproject/\n├── program/\n|   ├── _master.qmd  # Organize all the files under, set the main working directory\n│   ├── cl_00.qmd    # Data import and renaming\n│   ├── cl_01.qmd    # Clean allocated values\n│   ├── cl_02.qmd    # Variable generation\n│   ├── cl_03.qmd    # Sample restrictions\n|   ├── an_01.qmd    # This will be your basic model result\n|   └── ...          # Other model that you want to build\n├── data/\n|   ├── source     # storage of the raw datasets\n|   └── output     # storage of cleaned datasets\n├── log/           # storage of the results of data analysis \n├── graph/         # storage of graphs\n└── reference/     # reference of your research"
+  },
+  {
+    "objectID": "data_organization.html#note",
+    "href": "data_organization.html#note",
+    "title": "Data Organization",
+    "section": "7 📌 Note",
+    "text": "7 📌 Note\n\nIf you’re working with more than one raw dataset, it’s good practice to create a separate cleaning script for each one. For example:\n\n\nquarto_render(\"program/cl_01_acs.qmd\")  # Load the acs data\n\nquarto_render(\"program/cl_01_cps.qmd\")  # Load the cps data\n\nIf the datasets need to be merged, write a dedicated merge script\n\nquarto_render(\"program/cl_04_merge.qmd\")\n\n\nYour _master script should do more than just run your code—it should also:\n\n\n\nDescribe the purpose of each cleaning and analysis file\nClearly label each stage of the workflow (e.g., cleaning, merging, modeling)\nHelp collaborators or reviewers understand the flow of your project at a glance"
+  },
+  {
+    "objectID": "example_1.html",
+    "href": "example_1.html",
     "title": "example_1",
     "section": "",
-    "text": "data_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\n# Own education\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(\n    schooling = case_when(\n      educd %in% c(0, 1, 2) ~ NA_real_,\n      educd == 10 ~ 2.5,\n      educd == 21 ~ 5.5,\n      educd == 24 ~ 7.5,\n      educd == 30 ~ 9,\n      educd == 40 ~ 10,\n      educd == 50 ~ 11,\n      educd %in% c(61, 62) ~ 12,\n      educd %in% c(65, 71) ~ 13,\n      educd == 81 ~ 14,\n      educd == 101 ~ 16,\n      educd == 114 ~ 18,\n      educd %in% c(115, 116) ~ 16,\n      TRUE ~ educd\n    ),\n    \n    # Own working experience\n    exp = age - schooling - 6,\n    exp = ifelse(exp &lt; 0, 0, exp),\n    exp2 = exp * exp,\n    \n    # Spousal Education\n    schooling_sp = case_when(\n      educd_sp %in% c(0, 1, 2) ~ NA_real_,\n      educd_sp == 10 ~ 2.5,\n      educd_sp == 21 ~ 5.5,\n      educd_sp == 24 ~ 7.5,\n      educd_sp == 30 ~ 9,\n      educd_sp == 40 ~ 10,\n      educd_sp == 50 ~ 11,\n      educd_sp %in% c(61, 62) ~ 12,\n      educd_sp %in% c(65, 71) ~ 13,\n      educd_sp == 81 ~ 14,\n      educd_sp == 101 ~ 16,\n      educd_sp == 114 ~ 18,\n      educd_sp %in% c(115, 116) ~ 16,\n      TRUE ~ educd_sp\n    )\n  )\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
+    "text": "For this example, we’ll walk through a simplified replication exercise based on the paper “Does Compulsory School Attendance Affect Schooling and Earnings?” by Angrist and Krueger (1991). For this exercise, we’ll clean a dataset from the ACS to prepare it for studying the relationship between years of education and income. Since this paper used the birth quarter as the instrument as the years of the education, we will go through the practice of cleaning out year of birth and quarter of birth as well.\n\n\nFor this task, we’ll download data from IPUMS and split it by year. The purpose of this approach is to allow us to test the model’s significance separately for each individual year later on.\n\n# usa_00012 is the file name when you directly download from IPUMS\n\ndata_acs &lt;- read_csv(\"data/source/usa_00012.csv\")\n\n#Make sure the 'year' column is treated as a factor or numeric\ndata_acs$year &lt;- as.integer(data_acs$year)\n\n# Split the data into a list of datasets, one per year\n# Now data_by_year is a named list, e.g. data_by_year[[\"2001\"]], data_by_year[[\"2002\"]], etc.\n\ndata_by_year &lt;- split(data_acs, data_acs$year)\n\nfor (yr in names(data_by_year)) {\n  write.csv(data_by_year[[yr]], paste0(\"data/outcome/\", yr, \".csv\"), row.names = FALSE)\n}  \n\n\n\n\nIn this example, we need to work with 1980 data, which uses different set of allocated values compared to other years. Because of this, we handle the cleaning process for 1940 separately. This is also one of the main reasons we split the dataset by year in the first place— the more years of data we include, the more likely it is that coding differences or structural changes will occur across time.\n\n# Load 1980 data\ndata_1980 &lt;- read_csv(\"data/outcome/1980.csv\")\n\n#define the allocated values \nqvarlist &lt;- c(\"qage\", \"qmarst\", \"qsex\", \"qbpl\", \"qrace\", \"qeduc\", \n              \"qschool\", \"qclasswk\", \"qempstat\", \"quhrswor\", \n              \"qwkswork1\", \"qincwage\")\n\n\n# Process each variable in the list\nfor (i in qvarlist) {\n  # Drop observations where the variable value is greater than 3\n  # (equivalent to 'drop if `i'&gt;3')\n  data &lt;- data[data[[i]] &lt;= 3 | is.na(data[[i]]), ]\n  \n  # Drop the variable from the dataset\n  # (equivalent to 'drop `i'')\n  data &lt;- data[, !names(data) %in% i]\n}\n\n\n# Save cleaned 1980 data\nwrite_csv(data_1980, \"data/outcome/1980_i.csv\")\n\n\nyears &lt;- c(2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nqvarlist &lt;- c(\"qage\", \"qmarst\", \"qsex\", \"qbpl\", \"qrace\", \"qeduc\", \n              \"qschool\", \"qclasswk\", \"qempstat\", \"quhrswor\", \n              \"qwkswork1\", \"qincwage\")\n\n# Loop through each year (equivalent to 'foreach k in `r(numlist)'')\nfor (k in years) {\n  \n  # Load the data for current year (equivalent to 'use data/outcome/`k'.dta,clear')\n  data &lt;- read_dta(paste0(\"data/outcome/\", k, \".dta\"))\n  \n  # Process each variable in the list\n  for (i in qvarlist) {\n    # Drop observations where the variable value is greater than 3\n    # (equivalent to 'drop if `i'&gt;3')\n    data &lt;- data[data[[i]] &lt;= 3 | is.na(data[[i]]), ]\n    \n    # Drop the variable from the dataset\n    # (equivalent to 'drop `i'')\n    data &lt;- data[, !names(data) %in% i]\n  }\n  \n  # Save the processed data (equivalent to 'save data/outcome/`k'_i.dta,replace')\n  write_csv(data, paste0(\"data/outcome/\", k, \"_i.dta\"))\n}\n\n\n\n\nFor this dataset, our dependent variables will include: annual wage, weekly wage, and weeks worked in the previous year.\nThe key independent variables are: years of education, birth year, and birth quarter.\nAdditional demographic controls include: race, marital status, employment status, age group, working experience, and gender.\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\n# Loop through each year (equivalent to 'foreach i in `r(numlist)'')\nfor (i in years) {\n  \n  # Load the processed data (equivalent to 'use data/outcome/`i'_i,clear')\n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Replace incwage with missing value if &gt;= 999999\n  # (equivalent to 'replace incwage = . if incwage &gt;= 999999')\n  data$incwage[data$incwage &gt;= 999999] &lt;- NA\n  \n  # Save the data (equivalent to 'save data/outcome/`i'_i,replace')\n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  # Print progress (optional)\n  cat(\"Processed incwage for year:\", i, \"\\n\")\n}\n\n\n\n\nFor this variable, each year can have different definition for the topcode.\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\") %&gt;%\n  mutate(topcoded = as.numeric(incwage &gt;= 75000 & incwage &lt; 999999 & !is.na(incwage)))\n\n# For 2005  \ndata_2005 &lt;- read_csv(\"data/outcome/2005_i.csv\") %&gt;%\n  mutate(topcoded = as.numeric(incwage &gt;= 175000 & incwage &lt; 999999 & !is.na(incwage)))\n...\n\n\n\n\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\")\n\ndata_1980$incwage &lt;- data_1980$incwage * 2.314\n\nwrite_csv(data_1980, \"data/outcome/1980_i.csv\")\n\ndata_2005 &lt;- read.csv(\"data/outcome/2005_i.csv\")\n\ndata_2005$incwage &lt;- data_2005$incwage * 0.853\n\nwrite.csv(data_2005, \"data/outcome/2005_i.csv\", row.names = FALSE)\n\n...\n\n\n\n\nAs mentioned earlier in the data access section, maintaining consistency of variables across years is important. This is a good example: the variable for years of education completed isn’t directly available in the ACS. Instead, we can use two closely related variables as proxies: highgrade(the highest grade of schooling, easy to clean for years of education, but not available after 1980) and educ(the education attainment, it is available for more years, but harder to clean).\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\")\n\n  data_1980$higrade[data_1980$higrade == 0] &lt;- NA\n  data_1980$higrade[data_1980$higrade %in% c(1, 2, 3)] &lt;- 0\n\n# Generate schooling variable (equivalent to 'g schooling = higrade')\n  data_1980$schooling &lt;- data_1980$higrade\n\n# Adjust schooling (equivalent to 'replace schooling = schooling - 3 if schooling&gt;3')\n  data_1980$schooling[data_1980$schooling &gt; 3 & !is.na(data_1980$schooling)] &lt;- \n  data_1980$schooling[data_1980$schooling &gt; 3 & !is.na(data_1980$schooling)] - 3\n\n# Generate experience (equivalent to 'g exp = age - schooling - 6')\n  data_1980$exp &lt;- data_1980$age - data_1980$schooling - 6\n\n# Replace negative experience with 0 \n  data_1980$exp[data_1980$exp &lt; 0 & !is.na(data_1980$exp)] &lt;- 0\n\n# Generate experience squared \n  data_1980$exp2 &lt;- data_1980$exp * data_1980$exp\n\n# Generate age squared \n  data_1980$age2 &lt;- data_1980$age * data_1980$age\n\n# Save the data (equivalent to 'save data/outcome/1980_i,replace')\n  write_csv(data_1980, \"data/outcome/1980_i.csv\")\n\n\nyears &lt;- c(2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_dta(paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  # Generate schooling from educd \n  data$schooling &lt;- data$educd\n  \n  # Recode schooling values \n  schooling_map &lt;- c(\n  \"0\" = NA, \"1\" = NA, \"2\" = NA,\n  \"10\" = 2.5, \"21\" = 5.5, \"24\" = 7.5, \"30\" = 9,\n  \"40\" = 10, \"50\" = 11, \"61\" = 12, \"62\" = 12, \"63\" = 12, \"64\" = 12,\n  \"65\" = 13, \"71\" = 13, \"81\" = 14, \"101\" = 16, \"114\" = 18, \"115\" = 16, \"116\" = 16\n)\n  \n  data$schooling &lt;- schooling_map[as.character(data$educd)]\n  \n  data$exp &lt;- data$age - data$schooling - 6\n  \n  data$exp[data$exp &lt; 0 & !is.na(data$exp)] &lt;- 0\n  \n  data$exp2 &lt;- data$exp * data$exp\n  \n  data$age2 &lt;- data$age * data$age\n  \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n}\n\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\n# ****************************************************\n# Generate weekly wage\n# ****************************************************\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Recode wkswork1 \n  data$wkswork1[data$wkswork1 == 0] &lt;- NA\n  \n  # Generate weeks variable \n  data$weeks &lt;- data$wkswork1\n  \n  # Generate weekly wage \n  data$wagewk &lt;- data$incwage / data$weeks\n  \n  # Save the data \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n}\n\n# ****************************************************\n# Generate hourly wage\n# ****************************************************\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Recode uhrswork \n  data$uhrswork[data$uhrswork == 0] &lt;- NA\n  \n  # Generate topcoded hours indicator \n  data$topcoded_uhr &lt;- as.numeric(data$uhrswork == 99 & !is.na(data$uhrswork))\n  \n  # Generate hourly wage \n  data$wagehr &lt;- data$incwage / (data$weeks * data$uhrswork)\n  \n  # Save the data \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n}\n\n💭 Exercise: Can you write the code to generate each individual’s year of birth and quarter of birth based on the available variables?\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \ndata &lt;- read_dta(paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n# ****************************************************\n# Marital Status\n# ****************************************************\n  \n    # Generate married indicator \n    data$marr &lt;- as.numeric(data$marst == 1 | data$marst == 2)\n  \n  \n# ****************************************************\n# Have a child under age 5\n# ****************************************************\n  \n   # Generate child under 5 indicator \n  data$child5 &lt;- as.numeric(data$nchlt5 &gt; 0 & !is.na(data$nchlt5))\n  \n  ...\n  \n# ****************************************************\n# Keep the relevant variables\n# ****************************************************\n  \n  # Define variable lists \n  indvar &lt;- c(\"schooling\", \"exp\", \"exp2\", \"topcoded\")\n  \n  depvar &lt;- c(\"incwage\", \"wagewk\", \"wagehr\")\n  \n  othervar &lt;- c(\"year\", \"sample\", \"serial\", \"pernum\",\n                \"gq\", \"statefip\", \"age\", \"ageg\", \"age2\",\n                \"marr\", \"child5\", ...)\n  \n  pweight &lt;- c(\"perwt\")\n  \n  # Combine all variables to keep\n  vars_to_keep &lt;- c(depvar, indvar, othervar, pweight)\n  \n  # Method 1: Shortest - direct subsetting with error handling\n  data_subset &lt;- data[, intersect(vars_to_keep, names(data)), drop = FALSE]\n  \n  # Save the data (equivalent to 'save data/outcome/`i'_pre,replace')\n  write_csv(data_subset, paste0(\"data/outcome/\", i, \"_pre.csv\"))\n\n}\n\n💭 The code above shows how to create a few demographic variables. Now, try extending it by generating the remaining ones—think about how you would code the rest based on the available data.\n\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_dta(paste0(\"data/outcome/\", i, \"_pre.dta\"))\n  \n  # if we limit the gender to male\n  data &lt;- data[data$male == 1 & !is.na(data$male), ]\n  \n  # keep only the individual with positive income\n  data &lt;- data[data$incwage &gt; 0 & !is.na(data$incwage), ]\n  \n  #touse the missing variables\n    data &lt;- data %&gt;%\n    mutate(\n      touse = complete.cases(select(., incwage, schooling, exp, exp2,\n                                   topcoded, perwt, ...))\n    ) %&gt;%\n    filter(touse)\n    \n  # If we want to have a unlinear model, you can post the log tranformation here \n\n  # Generate log wage \n  data$lnwage &lt;- log(data$incwage)\n    \n  write_dta(data, paste0(\"data/outcome/\", i, \"_final.dta\"))\n  \n}"
   },
   {
-    "objectID": "example_1.html#recode-the-weeks-usually-worked-and-generate-weekly-earnings",
-    "href": "example_1.html#recode-the-weeks-usually-worked-and-generate-weekly-earnings",
+    "objectID": "example_1.html#example-1-replicating-ak-paper",
+    "href": "example_1.html#example-1-replicating-ak-paper",
     "title": "example_1",
-    "section": "2 Recode the weeks usually worked and generate weekly earnings",
-    "text": "2 Recode the weeks usually worked and generate weekly earnings\n\ndata_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(\n    wkswork1 = ifelse(wkswork1 == 0, NA, wkswork1),\n    weeks = wkswork1,\n    wagewk = incwage / weeks\n  )\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
+    "section": "",
+    "text": "For this example, we’ll walk through a simplified replication exercise based on the paper “Does Compulsory School Attendance Affect Schooling and Earnings?” by Angrist and Krueger (1991). For this exercise, we’ll clean a dataset from the ACS to prepare it for studying the relationship between years of education and income. Since this paper used the birth quarter as the instrument as the years of the education, we will go through the practice of cleaning out year of birth and quarter of birth as well.\n\n\nFor this task, we’ll download data from IPUMS and split it by year. The purpose of this approach is to allow us to test the model’s significance separately for each individual year later on.\n\n# usa_00012 is the file name when you directly download from IPUMS\n\ndata_acs &lt;- read_csv(\"data/source/usa_00012.csv\")\n\n#Make sure the 'year' column is treated as a factor or numeric\ndata_acs$year &lt;- as.integer(data_acs$year)\n\n# Split the data into a list of datasets, one per year\n# Now data_by_year is a named list, e.g. data_by_year[[\"2001\"]], data_by_year[[\"2002\"]], etc.\n\ndata_by_year &lt;- split(data_acs, data_acs$year)\n\nfor (yr in names(data_by_year)) {\n  write.csv(data_by_year[[yr]], paste0(\"data/outcome/\", yr, \".csv\"), row.names = FALSE)\n}  \n\n\n\n\nIn this example, we need to work with 1980 data, which uses different set of allocated values compared to other years. Because of this, we handle the cleaning process for 1940 separately. This is also one of the main reasons we split the dataset by year in the first place— the more years of data we include, the more likely it is that coding differences or structural changes will occur across time.\n\n# Load 1980 data\ndata_1980 &lt;- read_csv(\"data/outcome/1980.csv\")\n\n#define the allocated values \nqvarlist &lt;- c(\"qage\", \"qmarst\", \"qsex\", \"qbpl\", \"qrace\", \"qeduc\", \n              \"qschool\", \"qclasswk\", \"qempstat\", \"quhrswor\", \n              \"qwkswork1\", \"qincwage\")\n\n\n# Process each variable in the list\nfor (i in qvarlist) {\n  # Drop observations where the variable value is greater than 3\n  # (equivalent to 'drop if `i'&gt;3')\n  data &lt;- data[data[[i]] &lt;= 3 | is.na(data[[i]]), ]\n  \n  # Drop the variable from the dataset\n  # (equivalent to 'drop `i'')\n  data &lt;- data[, !names(data) %in% i]\n}\n\n\n# Save cleaned 1980 data\nwrite_csv(data_1980, \"data/outcome/1980_i.csv\")\n\n\nyears &lt;- c(2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nqvarlist &lt;- c(\"qage\", \"qmarst\", \"qsex\", \"qbpl\", \"qrace\", \"qeduc\", \n              \"qschool\", \"qclasswk\", \"qempstat\", \"quhrswor\", \n              \"qwkswork1\", \"qincwage\")\n\n# Loop through each year (equivalent to 'foreach k in `r(numlist)'')\nfor (k in years) {\n  \n  # Load the data for current year (equivalent to 'use data/outcome/`k'.dta,clear')\n  data &lt;- read_dta(paste0(\"data/outcome/\", k, \".dta\"))\n  \n  # Process each variable in the list\n  for (i in qvarlist) {\n    # Drop observations where the variable value is greater than 3\n    # (equivalent to 'drop if `i'&gt;3')\n    data &lt;- data[data[[i]] &lt;= 3 | is.na(data[[i]]), ]\n    \n    # Drop the variable from the dataset\n    # (equivalent to 'drop `i'')\n    data &lt;- data[, !names(data) %in% i]\n  }\n  \n  # Save the processed data (equivalent to 'save data/outcome/`k'_i.dta,replace')\n  write_csv(data, paste0(\"data/outcome/\", k, \"_i.dta\"))\n}\n\n\n\n\nFor this dataset, our dependent variables will include: annual wage, weekly wage, and weeks worked in the previous year.\nThe key independent variables are: years of education, birth year, and birth quarter.\nAdditional demographic controls include: race, marital status, employment status, age group, working experience, and gender.\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\n# Loop through each year (equivalent to 'foreach i in `r(numlist)'')\nfor (i in years) {\n  \n  # Load the processed data (equivalent to 'use data/outcome/`i'_i,clear')\n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Replace incwage with missing value if &gt;= 999999\n  # (equivalent to 'replace incwage = . if incwage &gt;= 999999')\n  data$incwage[data$incwage &gt;= 999999] &lt;- NA\n  \n  # Save the data (equivalent to 'save data/outcome/`i'_i,replace')\n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  # Print progress (optional)\n  cat(\"Processed incwage for year:\", i, \"\\n\")\n}\n\n\n\n\nFor this variable, each year can have different definition for the topcode.\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\") %&gt;%\n  mutate(topcoded = as.numeric(incwage &gt;= 75000 & incwage &lt; 999999 & !is.na(incwage)))\n\n# For 2005  \ndata_2005 &lt;- read_csv(\"data/outcome/2005_i.csv\") %&gt;%\n  mutate(topcoded = as.numeric(incwage &gt;= 175000 & incwage &lt; 999999 & !is.na(incwage)))\n...\n\n\n\n\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\")\n\ndata_1980$incwage &lt;- data_1980$incwage * 2.314\n\nwrite_csv(data_1980, \"data/outcome/1980_i.csv\")\n\ndata_2005 &lt;- read.csv(\"data/outcome/2005_i.csv\")\n\ndata_2005$incwage &lt;- data_2005$incwage * 0.853\n\nwrite.csv(data_2005, \"data/outcome/2005_i.csv\", row.names = FALSE)\n\n...\n\n\n\n\nAs mentioned earlier in the data access section, maintaining consistency of variables across years is important. This is a good example: the variable for years of education completed isn’t directly available in the ACS. Instead, we can use two closely related variables as proxies: highgrade(the highest grade of schooling, easy to clean for years of education, but not available after 1980) and educ(the education attainment, it is available for more years, but harder to clean).\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\")\n\n  data_1980$higrade[data_1980$higrade == 0] &lt;- NA\n  data_1980$higrade[data_1980$higrade %in% c(1, 2, 3)] &lt;- 0\n\n# Generate schooling variable (equivalent to 'g schooling = higrade')\n  data_1980$schooling &lt;- data_1980$higrade\n\n# Adjust schooling (equivalent to 'replace schooling = schooling - 3 if schooling&gt;3')\n  data_1980$schooling[data_1980$schooling &gt; 3 & !is.na(data_1980$schooling)] &lt;- \n  data_1980$schooling[data_1980$schooling &gt; 3 & !is.na(data_1980$schooling)] - 3\n\n# Generate experience (equivalent to 'g exp = age - schooling - 6')\n  data_1980$exp &lt;- data_1980$age - data_1980$schooling - 6\n\n# Replace negative experience with 0 \n  data_1980$exp[data_1980$exp &lt; 0 & !is.na(data_1980$exp)] &lt;- 0\n\n# Generate experience squared \n  data_1980$exp2 &lt;- data_1980$exp * data_1980$exp\n\n# Generate age squared \n  data_1980$age2 &lt;- data_1980$age * data_1980$age\n\n# Save the data (equivalent to 'save data/outcome/1980_i,replace')\n  write_csv(data_1980, \"data/outcome/1980_i.csv\")\n\n\nyears &lt;- c(2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_dta(paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  # Generate schooling from educd \n  data$schooling &lt;- data$educd\n  \n  # Recode schooling values \n  schooling_map &lt;- c(\n  \"0\" = NA, \"1\" = NA, \"2\" = NA,\n  \"10\" = 2.5, \"21\" = 5.5, \"24\" = 7.5, \"30\" = 9,\n  \"40\" = 10, \"50\" = 11, \"61\" = 12, \"62\" = 12, \"63\" = 12, \"64\" = 12,\n  \"65\" = 13, \"71\" = 13, \"81\" = 14, \"101\" = 16, \"114\" = 18, \"115\" = 16, \"116\" = 16\n)\n  \n  data$schooling &lt;- schooling_map[as.character(data$educd)]\n  \n  data$exp &lt;- data$age - data$schooling - 6\n  \n  data$exp[data$exp &lt; 0 & !is.na(data$exp)] &lt;- 0\n  \n  data$exp2 &lt;- data$exp * data$exp\n  \n  data$age2 &lt;- data$age * data$age\n  \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n}\n\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\n# ****************************************************\n# Generate weekly wage\n# ****************************************************\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Recode wkswork1 \n  data$wkswork1[data$wkswork1 == 0] &lt;- NA\n  \n  # Generate weeks variable \n  data$weeks &lt;- data$wkswork1\n  \n  # Generate weekly wage \n  data$wagewk &lt;- data$incwage / data$weeks\n  \n  # Save the data \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n}\n\n# ****************************************************\n# Generate hourly wage\n# ****************************************************\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Recode uhrswork \n  data$uhrswork[data$uhrswork == 0] &lt;- NA\n  \n  # Generate topcoded hours indicator \n  data$topcoded_uhr &lt;- as.numeric(data$uhrswork == 99 & !is.na(data$uhrswork))\n  \n  # Generate hourly wage \n  data$wagehr &lt;- data$incwage / (data$weeks * data$uhrswork)\n  \n  # Save the data \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n}\n\n💭 Exercise: Can you write the code to generate each individual’s year of birth and quarter of birth based on the available variables?\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \ndata &lt;- read_dta(paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n# ****************************************************\n# Marital Status\n# ****************************************************\n  \n    # Generate married indicator \n    data$marr &lt;- as.numeric(data$marst == 1 | data$marst == 2)\n  \n  \n# ****************************************************\n# Have a child under age 5\n# ****************************************************\n  \n   # Generate child under 5 indicator \n  data$child5 &lt;- as.numeric(data$nchlt5 &gt; 0 & !is.na(data$nchlt5))\n  \n  ...\n  \n# ****************************************************\n# Keep the relevant variables\n# ****************************************************\n  \n  # Define variable lists \n  indvar &lt;- c(\"schooling\", \"exp\", \"exp2\", \"topcoded\")\n  \n  depvar &lt;- c(\"incwage\", \"wagewk\", \"wagehr\")\n  \n  othervar &lt;- c(\"year\", \"sample\", \"serial\", \"pernum\",\n                \"gq\", \"statefip\", \"age\", \"ageg\", \"age2\",\n                \"marr\", \"child5\", ...)\n  \n  pweight &lt;- c(\"perwt\")\n  \n  # Combine all variables to keep\n  vars_to_keep &lt;- c(depvar, indvar, othervar, pweight)\n  \n  # Method 1: Shortest - direct subsetting with error handling\n  data_subset &lt;- data[, intersect(vars_to_keep, names(data)), drop = FALSE]\n  \n  # Save the data (equivalent to 'save data/outcome/`i'_pre,replace')\n  write_csv(data_subset, paste0(\"data/outcome/\", i, \"_pre.csv\"))\n\n}\n\n💭 The code above shows how to create a few demographic variables. Now, try extending it by generating the remaining ones—think about how you would code the rest based on the available data.\n\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_dta(paste0(\"data/outcome/\", i, \"_pre.dta\"))\n  \n  # if we limit the gender to male\n  data &lt;- data[data$male == 1 & !is.na(data$male), ]\n  \n  # keep only the individual with positive income\n  data &lt;- data[data$incwage &gt; 0 & !is.na(data$incwage), ]\n  \n  #touse the missing variables\n    data &lt;- data %&gt;%\n    mutate(\n      touse = complete.cases(select(., incwage, schooling, exp, exp2,\n                                   topcoded, perwt, ...))\n    ) %&gt;%\n    filter(touse)\n    \n  # If we want to have a unlinear model, you can post the log tranformation here \n\n  # Generate log wage \n  data$lnwage &lt;- log(data$incwage)\n    \n  write_dta(data, paste0(\"data/outcome/\", i, \"_final.dta\"))\n  \n}"
   },
   {
-    "objectID": "example_1.html#generate-hourly-wage",
-    "href": "example_1.html#generate-hourly-wage",
-    "title": "example_1",
-    "section": "2 Generate hourly wage",
-    "text": "2 Generate hourly wage\n\ndata_2000_i &lt;- read.xlsx(\"data/outcome/2000_i.xlsx\")\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(\n    uhrswork = ifelse(uhrswork == 0, NA, uhrswork),\n    topcoded_uhr = (uhrswork == 99),\n    wagehr = incwage / (weeks * uhrswork)\n  )\n\nwrite.xlsx(data_2000_i, \"data/outcome/2000_i.xlsx\")"
-  },
-  {
-    "objectID": "example_1.html#marital-status",
-    "href": "example_1.html#marital-status",
-    "title": "example_1",
-    "section": "2 Marital Status",
-    "text": "2 Marital Status\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(\n    marr = case_when(\n      marst == 1 ~ 1,\n      marst &gt; 1 & marst &lt; 6 ~ NA_real_,\n      marst &gt; 6 | marst &lt; 1 ~ NA_real_,\n      TRUE ~ 0\n    )\n  )\n\n# 1: Currently married\n# 0: Not currently married (including cohabitating, \n#    but such cohabitating individuals will be included\n#    in our analysis)"
-  },
-  {
-    "objectID": "example_1.html#have-a-child-under-age-5",
-    "href": "example_1.html#have-a-child-under-age-5",
-    "title": "example_1",
-    "section": "2 Have a child under age 5",
-    "text": "2 Have a child under age 5\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(child5 = (nchlt5 &gt; 0))"
-  },
-  {
-    "objectID": "example_1.html#gender",
-    "href": "example_1.html#gender",
-    "title": "example_1",
-    "section": "3 Gender",
-    "text": "3 Gender\n\ndata_2000_i &lt;- data_2000_i %&gt;%\n  mutate(male = (sex == 1))"
+    "objectID": "example_2.html",
+    "href": "example_2.html",
+    "title": "example_2",
+    "section": "",
+    "text": "For this example, we are aiming to clean the fertility condition for the females, but these information are not straightforward In that case, we need to consider clean and identify the information by ourselves\n\nyears &lt;- c(1980, 1990)\n\nfor(year in years) {\n  # Load data\n  data_i &lt;- read_dta(paste0(\"data/outcome/\", year, \"_i.dta\"))\n  \n  # Sort by serial and birthyr\n  data_i %\n    arrange(serial, birthyr)\n  \n  # Generate birth order for children with mothers in household\n  data_i %\n    group_by(serial) %&gt;%\n    mutate(birth_order = ifelse(momloc != 0, row_number(), NA)) %&gt;%\n    ungroup()\n  \n  # Create indicator for child's sex (1 for male, 0 for female)\n  data_i %\n    mutate(male = ifelse(sex == 1, 1, 0))\n  \n  # Generate first child sex indicator (earliest birth year)\n  data_i %\n    group_by(serial) %&gt;%\n    mutate(\n      boy1st = case_when(\n        birth_order == 1 & male == 1 ~ 1,\n        birth_order == 1 & male == 0 ~ 0,\n        TRUE ~ NA_real_\n      )\n    ) %&gt;%\n    ungroup()\n  \n  # Generate second child sex indicator\n  data_i %\n    group_by(serial) %&gt;%\n    arrange(birth_order) %&gt;%\n    mutate(\n      boy2nd = case_when(\n        birth_order == 2 & male == 1 ~ 1,\n        birth_order == 2 & male == 0 ~ 0,\n        TRUE ~ NA_real_\n      )\n    ) %&gt;%\n    ungroup()\n  \n  # Save data\n  write_dta(data_i, paste0(\"data/outcome/\", year, \"_i.dta\"))\n}"
   },
   {
     "objectID": "example_2.html#example-2-to-merge-mothers-information",
@@ -649,12 +334,5 @@
     "title": "example_2",
     "section": "13 Summary",
     "text": "13 Summary\nThis tutorial covered: - Setting up Google Maps API for geocoding - Basic and advanced geocoding techniques - Error handling and rate limiting - Quality control and validation - Best practices for production use\nRemember to always respect API terms of service and implement appropriate rate limiting for large-scale geocoding projects."
-  },
-  {
-    "objectID": "example_1.html#example-1-replicating-ak-paper",
-    "href": "example_1.html#example-1-replicating-ak-paper",
-    "title": "example_1",
-    "section": "",
-    "text": "For this example, we’ll walk through a simplified replication exercise based on the paper “Does Compulsory School Attendance Affect Schooling and Earnings?” by Angrist and Krueger (1991). For this exercise, we’ll clean a dataset from the ACS to prepare it for studying the relationship between years of education and income. Since this paper used the birth quarter as the instrument as the years of the education, we will go through the practice of cleaning out year of birth and quarter of birth as well.\n\n\nFor this task, we’ll download data from IPUMS and split it by year. The purpose of this approach is to allow us to test the model’s significance separately for each individual year later on.\n\n# usa_00012 is the file name when you directly download from IPUMS\n\ndata_acs &lt;- read_csv(\"data/source/usa_00012.csv\")\n\n#Make sure the 'year' column is treated as a factor or numeric\ndata_acs$year &lt;- as.integer(data_acs$year)\n\n# Split the data into a list of datasets, one per year\n# Now data_by_year is a named list, e.g. data_by_year[[\"2001\"]], data_by_year[[\"2002\"]], etc.\n\ndata_by_year &lt;- split(data_acs, data_acs$year)\n\nfor (yr in names(data_by_year)) {\n  write.csv(data_by_year[[yr]], paste0(\"data/outcome/\", yr, \".csv\"), row.names = FALSE)\n}  \n\n\n\n\nIn this example, we need to work with 1980 data, which uses different set of allocated values compared to other years. Because of this, we handle the cleaning process for 1940 separately. This is also one of the main reasons we split the dataset by year in the first place— the more years of data we include, the more likely it is that coding differences or structural changes will occur across time.\n\n# Load 1980 data\ndata_1980 &lt;- read_csv(\"data/outcome/1980.csv\")\n\n#define the allocated values \nqvarlist &lt;- c(\"qage\", \"qmarst\", \"qsex\", \"qbpl\", \"qrace\", \"qeduc\", \n              \"qschool\", \"qclasswk\", \"qempstat\", \"quhrswor\", \n              \"qwkswork1\", \"qincwage\")\n\n\n# Process each variable in the list\nfor (i in qvarlist) {\n  # Drop observations where the variable value is greater than 3\n  # (equivalent to 'drop if `i'&gt;3')\n  data &lt;- data[data[[i]] &lt;= 3 | is.na(data[[i]]), ]\n  \n  # Drop the variable from the dataset\n  # (equivalent to 'drop `i'')\n  data &lt;- data[, !names(data) %in% i]\n}\n\n\n# Save cleaned 1980 data\nwrite_csv(data_1980, \"data/outcome/1980_i.csv\")\n\n\nyears &lt;- c(2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nqvarlist &lt;- c(\"qage\", \"qmarst\", \"qsex\", \"qbpl\", \"qrace\", \"qeduc\", \n              \"qschool\", \"qclasswk\", \"qempstat\", \"quhrswor\", \n              \"qwkswork1\", \"qincwage\")\n\n# Loop through each year (equivalent to 'foreach k in `r(numlist)'')\nfor (k in years) {\n  \n  # Load the data for current year (equivalent to 'use data/outcome/`k'.dta,clear')\n  data &lt;- read_dta(paste0(\"data/outcome/\", k, \".dta\"))\n  \n  # Process each variable in the list\n  for (i in qvarlist) {\n    # Drop observations where the variable value is greater than 3\n    # (equivalent to 'drop if `i'&gt;3')\n    data &lt;- data[data[[i]] &lt;= 3 | is.na(data[[i]]), ]\n    \n    # Drop the variable from the dataset\n    # (equivalent to 'drop `i'')\n    data &lt;- data[, !names(data) %in% i]\n  }\n  \n  # Save the processed data (equivalent to 'save data/outcome/`k'_i.dta,replace')\n  write_csv(data, paste0(\"data/outcome/\", k, \"_i.dta\"))\n}\n\n\n\n\nFor this dataset, our dependent variables will include: annual wage, weekly wage, and weeks worked in the previous year.\nThe key independent variables are: years of education, birth year, and birth quarter.\nAdditional demographic controls include: race, marital status, employment status, age group, working experience, and gender.\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\n# Loop through each year (equivalent to 'foreach i in `r(numlist)'')\nfor (i in years) {\n  \n  # Load the processed data (equivalent to 'use data/outcome/`i'_i,clear')\n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Replace incwage with missing value if &gt;= 999999\n  # (equivalent to 'replace incwage = . if incwage &gt;= 999999')\n  data$incwage[data$incwage &gt;= 999999] &lt;- NA\n  \n  # Save the data (equivalent to 'save data/outcome/`i'_i,replace')\n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  # Print progress (optional)\n  cat(\"Processed incwage for year:\", i, \"\\n\")\n}\n\n\n\n\nFor this variable, each year can have different definition for the topcode.\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\") %&gt;%\n  mutate(topcoded = as.numeric(incwage &gt;= 75000 & incwage &lt; 999999 & !is.na(incwage)))\n\n# For 2005  \ndata_2005 &lt;- read_csv(\"data/outcome/2005_i.csv\") %&gt;%\n  mutate(topcoded = as.numeric(incwage &gt;= 175000 & incwage &lt; 999999 & !is.na(incwage)))\n...\n\n\n\n\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\")\n\ndata_1980$incwage &lt;- data_1980$incwage * 2.314\n\nwrite_csv(data_1980, \"data/outcome/1980_i.csv\")\n\ndata_2005 &lt;- read.csv(\"data/outcome/2005_i.csv\")\n\ndata_2005$incwage &lt;- data_2005$incwage * 0.853\n\nwrite.csv(data_2005, \"data/outcome/2005_i.csv\", row.names = FALSE)\n\n...\n\n\n\n\nAs mentioned earlier in the data access section, maintaining consistency of variables across years is important. This is a good example: the variable for years of education completed isn’t directly available in the ACS. Instead, we can use two closely related variables as proxies: highgrade(the highest grade of schooling, easy to clean for years of education, but not available after 1980) and educ(the education attainment, it is available for more years, but harder to clean).\n\ndata_1980 &lt;- read_csv(\"data/outcome/1980_i.csv\")\n\n  data_1980$higrade[data_1980$higrade == 0] &lt;- NA\n  data_1980$higrade[data_1980$higrade %in% c(1, 2, 3)] &lt;- 0\n\n# Generate schooling variable (equivalent to 'g schooling = higrade')\n  data_1980$schooling &lt;- data_1980$higrade\n\n# Adjust schooling (equivalent to 'replace schooling = schooling - 3 if schooling&gt;3')\n  data_1980$schooling[data_1980$schooling &gt; 3 & !is.na(data_1980$schooling)] &lt;- \n  data_1980$schooling[data_1980$schooling &gt; 3 & !is.na(data_1980$schooling)] - 3\n\n# Generate experience (equivalent to 'g exp = age - schooling - 6')\n  data_1980$exp &lt;- data_1980$age - data_1980$schooling - 6\n\n# Replace negative experience with 0 \n  data_1980$exp[data_1980$exp &lt; 0 & !is.na(data_1980$exp)] &lt;- 0\n\n# Generate experience squared \n  data_1980$exp2 &lt;- data_1980$exp * data_1980$exp\n\n# Generate age squared \n  data_1980$age2 &lt;- data_1980$age * data_1980$age\n\n# Save the data (equivalent to 'save data/outcome/1980_i,replace')\n  write_csv(data_1980, \"data/outcome/1980_i.csv\")\n\n\nyears &lt;- c(2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_dta(paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n  # Generate schooling from educd \n  data$schooling &lt;- data$educd\n  \n  # Recode schooling values \n  schooling_map &lt;- c(\n  \"0\" = NA, \"1\" = NA, \"2\" = NA,\n  \"10\" = 2.5, \"21\" = 5.5, \"24\" = 7.5, \"30\" = 9,\n  \"40\" = 10, \"50\" = 11, \"61\" = 12, \"62\" = 12, \"63\" = 12, \"64\" = 12,\n  \"65\" = 13, \"71\" = 13, \"81\" = 14, \"101\" = 16, \"114\" = 18, \"115\" = 16, \"116\" = 16\n)\n  \n  data$schooling &lt;- schooling_map[as.character(data$educd)]\n  \n  data$exp &lt;- data$age - data$schooling - 6\n  \n  data$exp[data$exp &lt; 0 & !is.na(data$exp)] &lt;- 0\n  \n  data$exp2 &lt;- data$exp * data$exp\n  \n  data$age2 &lt;- data$age * data$age\n  \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n}\n\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\n# ****************************************************\n# Generate weekly wage\n# ****************************************************\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Recode wkswork1 \n  data$wkswork1[data$wkswork1 == 0] &lt;- NA\n  \n  # Generate weeks variable \n  data$weeks &lt;- data$wkswork1\n  \n  # Generate weekly wage \n  data$wagewk &lt;- data$incwage / data$weeks\n  \n  # Save the data \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n}\n\n# ****************************************************\n# Generate hourly wage\n# ****************************************************\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_csv(paste0(\"data/outcome/\", i, \"_i.csv\"))\n  \n  # Recode uhrswork \n  data$uhrswork[data$uhrswork == 0] &lt;- NA\n  \n  # Generate topcoded hours indicator \n  data$topcoded_uhr &lt;- as.numeric(data$uhrswork == 99 & !is.na(data$uhrswork))\n  \n  # Generate hourly wage \n  data$wagehr &lt;- data$incwage / (data$weeks * data$uhrswork)\n  \n  # Save the data \n  write_csv(data, paste0(\"data/outcome/\", i, \"_i.csv\"))\n}\n\n💭 Exercise: Can you write the code to generate each individual’s year of birth and quarter of birth based on the available variables?\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \ndata &lt;- read_dta(paste0(\"data/outcome/\", i, \"_i.dta\"))\n  \n# ****************************************************\n# Marital Status\n# ****************************************************\n  \n    # Generate married indicator \n    data$marr &lt;- as.numeric(data$marst == 1 | data$marst == 2)\n  \n  \n# ****************************************************\n# Have a child under age 5\n# ****************************************************\n  \n   # Generate child under 5 indicator \n  data$child5 &lt;- as.numeric(data$nchlt5 &gt; 0 & !is.na(data$nchlt5))\n  \n  ...\n  \n# ****************************************************\n# Keep the relevant variables\n# ****************************************************\n  \n  # Define variable lists \n  indvar &lt;- c(\"schooling\", \"exp\", \"exp2\", \"topcoded\")\n  \n  depvar &lt;- c(\"incwage\", \"wagewk\", \"wagehr\")\n  \n  othervar &lt;- c(\"year\", \"sample\", \"serial\", \"pernum\",\n                \"gq\", \"statefip\", \"age\", \"ageg\", \"age2\",\n                \"marr\", \"child5\", ...)\n  \n  pweight &lt;- c(\"perwt\")\n  \n  # Combine all variables to keep\n  vars_to_keep &lt;- c(depvar, indvar, othervar, pweight)\n  \n  # Method 1: Shortest - direct subsetting with error handling\n  data_subset &lt;- data[, intersect(vars_to_keep, names(data)), drop = FALSE]\n  \n  # Save the data (equivalent to 'save data/outcome/`i'_pre,replace')\n  write_csv(data_subset, paste0(\"data/outcome/\", i, \"_pre.csv\"))\n\n}\n\n💭 The code above shows how to create a few demographic variables. Now, try extending it by generating the remaining ones—think about how you would code the rest based on the available data.\n\n\n\n\n\nyears &lt;- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)\n\nfor (i in years) {\n  \n  # Load the data \n  data &lt;- read_dta(paste0(\"data/outcome/\", i, \"_pre.dta\"))\n  \n  # if we limit the gender to male\n  data &lt;- data[data$male == 1 & !is.na(data$male), ]\n  \n  # keep only the individual with positive income\n  data &lt;- data[data$incwage &gt; 0 & !is.na(data$incwage), ]\n  \n  #touse the missing variables\n    data &lt;- data %&gt;%\n    mutate(\n      touse = complete.cases(select(., incwage, schooling, exp, exp2,\n                                   topcoded, perwt, ...))\n    ) %&gt;%\n    filter(touse)\n    \n  # If we want to have a unlinear model, you can post the log tranformation here \n\n  # Generate log wage \n  data$lnwage &lt;- log(data$incwage)\n    \n  write_dta(data, paste0(\"data/outcome/\", i, \"_final.dta\"))\n  \n}"
   }
 ]
