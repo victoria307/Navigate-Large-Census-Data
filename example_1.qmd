@@ -1,0 +1,374 @@
+---
+title: "example_1"
+format: html
+execute:
+  warning: false
+  message: false
+  eval: false
+---
+
+## 🔍 Example 1: Replicating AK Paper
+
+For this example, we’ll walk through a simplified replication exercise based on the paper [“Does Compulsory School Attendance Affect Schooling and Earnings?” by Angrist and Krueger (1991)](http://piketty.pse.ens.fr/files/AngristKrueger1991.pdf). For this exercise, we’ll clean a dataset from the ACS to prepare it for studying the relationship between years of education and income. Since this paper used the birth quarter as the instrument as the years of the education, we will go through the practice of cleaning out year of birth and quarter of birth as well.  
+
+### Data Import (cl_00)
+
+For this task, we’ll download data from IPUMS and split it by year. The purpose of this approach is to allow us to test the model’s significance separately for each individual year later on.
+
+```{r}
+# usa_00012 is the file name when you directly download from IPUMS
+
+data_acs <- read_csv("data/source/usa_00012.csv")
+
+#Make sure the 'year' column is treated as a factor or numeric
+data_acs$year <- as.integer(data_acs$year)
+
+# Split the data into a list of datasets, one per year
+# Now data_by_year is a named list, e.g. data_by_year[["2001"]], data_by_year[["2002"]], etc.
+
+data_by_year <- split(data_acs, data_acs$year)
+
+for (yr in names(data_by_year)) {
+  write.csv(data_by_year[[yr]], paste0("data/outcome/", yr, ".csv"), row.names = FALSE)
+}  
+  
+```
+
+### Clean out the Allocated Values (cl_01)
+
+In this example, we need to work with 1980 data, which uses different set of allocated values compared to other years. Because of this, we handle the cleaning process for 1940 separately. This is also one of the main reasons we split the dataset by year in the first place— the more years of data we include, the more likely it is that coding differences or structural changes will occur across time.
+
+```{r}
+# Load 1980 data
+data_1980 <- read_csv("data/outcome/1980.csv")
+
+#define the allocated values 
+qvarlist <- c("qage", "qmarst", "qsex", "qbpl", "qrace", "qeduc", 
+              "qschool", "qclasswk", "qempstat", "quhrswor", 
+              "qwkswork1", "qincwage")
+
+
+# Process each variable in the list
+for (i in qvarlist) {
+  # Drop observations where the variable value is greater than 3
+  # (equivalent to 'drop if `i'>3')
+  data <- data[data[[i]] <= 3 | is.na(data[[i]]), ]
+  
+  # Drop the variable from the dataset
+  # (equivalent to 'drop `i'')
+  data <- data[, !names(data) %in% i]
+}
+
+
+# Save cleaned 1980 data
+write_csv(data_1980, "data/outcome/1980_i.csv")
+```
+
+
+```{r}
+
+years <- c(2005, 2006, 2007, 2019, 2020, 2021, 2023)
+
+qvarlist <- c("qage", "qmarst", "qsex", "qbpl", "qrace", "qeduc", 
+              "qschool", "qclasswk", "qempstat", "quhrswor", 
+              "qwkswork1", "qincwage")
+
+# Loop through each year (equivalent to 'foreach k in `r(numlist)'')
+for (k in years) {
+  
+  # Load the data for current year (equivalent to 'use data/outcome/`k'.dta,clear')
+  data <- read_dta(paste0("data/outcome/", k, ".dta"))
+  
+  # Process each variable in the list
+  for (i in qvarlist) {
+    # Drop observations where the variable value is greater than 3
+    # (equivalent to 'drop if `i'>3')
+    data <- data[data[[i]] <= 3 | is.na(data[[i]]), ]
+    
+    # Drop the variable from the dataset
+    # (equivalent to 'drop `i'')
+    data <- data[, !names(data) %in% i]
+  }
+  
+  # Save the processed data (equivalent to 'save data/outcome/`k'_i.dta,replace')
+  write_csv(data, paste0("data/outcome/", k, "_i.dta"))
+}
+```
+
+### Data Cleaning (cl_02)
+
+For this dataset, our dependent variables will include: annual wage, weekly wage, and weeks worked in the previous year.
+
+The key independent variables are: years of education, birth year, and birth quarter.
+
+Additional demographic controls include: race, marital status, employment status, age group, working experience, and gender.
+
+#### Replacing code for NA values with na
+
+```{r}
+years <- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)
+
+# Loop through each year (equivalent to 'foreach i in `r(numlist)'')
+for (i in years) {
+  
+  # Load the processed data (equivalent to 'use data/outcome/`i'_i,clear')
+  data <- read_csv(paste0("data/outcome/", i, "_i.csv"))
+  
+  # Replace incwage with missing value if >= 999999
+  # (equivalent to 'replace incwage = . if incwage >= 999999')
+  data$incwage[data$incwage >= 999999] <- NA
+  
+  # Save the data (equivalent to 'save data/outcome/`i'_i,replace')
+  write_csv(data, paste0("data/outcome/", i, "_i.dta"))
+  
+  # Print progress (optional)
+  cat("Processed incwage for year:", i, "\n")
+}
+```
+
+#### Generate a variable indicating whether or not the Individual's wage is top-coded
+
+For this variable, each year can have different definition for the topcode. 
+```{r}
+data_1980 <- read_csv("data/outcome/1980_i.csv") %>%
+  mutate(topcoded = as.numeric(incwage >= 75000 & incwage < 999999 & !is.na(incwage)))
+
+# For 2005  
+data_2005 <- read_csv("data/outcome/2005_i.csv") %>%
+  mutate(topcoded = as.numeric(incwage >= 175000 & incwage < 999999 & !is.na(incwage)))
+...
+```
+
+#### Adjust the annual wage by inflation
+
+```{r}
+data_1980 <- read_csv("data/outcome/1980_i.csv")
+
+data_1980$incwage <- data_1980$incwage * 2.314
+
+write_csv(data_1980, "data/outcome/1980_i.csv")
+
+data_2005 <- read.csv("data/outcome/2005_i.csv")
+
+data_2005$incwage <- data_2005$incwage * 0.853
+
+write.csv(data_2005, "data/outcome/2005_i.csv", row.names = FALSE)
+
+...
+```
+
+#### Recode the Education variable and generate working experience
+
+As mentioned earlier in the data access section, maintaining consistency of variables across years is important. This is a good example: the variable for years of education completed isn’t directly available in the ACS. Instead, we can use two closely related variables as proxies:
+[highgrade](https://usa.ipums.org/usa-action/variables/HIGRADE#codes_section)(the highest grade of schooling, easy to clean for years of education, but not available after 1980) and [educ](https://usa.ipums.org/usa-action/variables/EDUC#description_section)(the education attainment, it is available for more years, but harder to clean). 
+
+```{r}
+data_1980 <- read_csv("data/outcome/1980_i.csv")
+
+  data_1980$higrade[data_1980$higrade == 0] <- NA
+  data_1980$higrade[data_1980$higrade %in% c(1, 2, 3)] <- 0
+
+# Generate schooling variable (equivalent to 'g schooling = higrade')
+  data_1980$schooling <- data_1980$higrade
+
+# Adjust schooling (equivalent to 'replace schooling = schooling - 3 if schooling>3')
+  data_1980$schooling[data_1980$schooling > 3 & !is.na(data_1980$schooling)] <- 
+  data_1980$schooling[data_1980$schooling > 3 & !is.na(data_1980$schooling)] - 3
+
+# Generate experience (equivalent to 'g exp = age - schooling - 6')
+  data_1980$exp <- data_1980$age - data_1980$schooling - 6
+
+# Replace negative experience with 0 
+  data_1980$exp[data_1980$exp < 0 & !is.na(data_1980$exp)] <- 0
+
+# Generate experience squared 
+  data_1980$exp2 <- data_1980$exp * data_1980$exp
+
+# Generate age squared 
+  data_1980$age2 <- data_1980$age * data_1980$age
+
+# Save the data (equivalent to 'save data/outcome/1980_i,replace')
+  write_csv(data_1980, "data/outcome/1980_i.csv")
+```
+
+
+```{r}
+years <- c(2005, 2006, 2007, 2019, 2020, 2021, 2023)
+
+for (i in years) {
+  
+  # Load the data 
+  data <- read_dta(paste0("data/outcome/", i, "_i.dta"))
+  
+  # Generate schooling from educd 
+  data$schooling <- data$educd
+  
+  # Recode schooling values 
+  schooling_map <- c(
+  "0" = NA, "1" = NA, "2" = NA,
+  "10" = 2.5, "21" = 5.5, "24" = 7.5, "30" = 9,
+  "40" = 10, "50" = 11, "61" = 12, "62" = 12, "63" = 12, "64" = 12,
+  "65" = 13, "71" = 13, "81" = 14, "101" = 16, "114" = 18, "115" = 16, "116" = 16
+)
+  
+  data$schooling <- schooling_map[as.character(data$educd)]
+  
+  data$exp <- data$age - data$schooling - 6
+  
+  data$exp[data$exp < 0 & !is.na(data$exp)] <- 0
+  
+  data$exp2 <- data$exp * data$exp
+  
+  data$age2 <- data$age * data$age
+  
+  write_csv(data, paste0("data/outcome/", i, "_i.csv"))
+  
+}
+```
+
+#### Recode the weeks usually worked, weekly earnings, and hourly earning
+
+```{r}
+
+years <- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)
+
+# ****************************************************
+# Generate weekly wage
+# ****************************************************
+
+for (i in years) {
+  
+  # Load the data 
+  data <- read_csv(paste0("data/outcome/", i, "_i.csv"))
+  
+  # Recode wkswork1 
+  data$wkswork1[data$wkswork1 == 0] <- NA
+  
+  # Generate weeks variable 
+  data$weeks <- data$wkswork1
+  
+  # Generate weekly wage 
+  data$wagewk <- data$incwage / data$weeks
+  
+  # Save the data 
+  write_csv(data, paste0("data/outcome/", i, "_i.csv"))
+  
+}
+
+# ****************************************************
+# Generate hourly wage
+# ****************************************************
+
+for (i in years) {
+  
+  # Load the data 
+  data <- read_csv(paste0("data/outcome/", i, "_i.csv"))
+  
+  # Recode uhrswork 
+  data$uhrswork[data$uhrswork == 0] <- NA
+  
+  # Generate topcoded hours indicator 
+  data$topcoded_uhr <- as.numeric(data$uhrswork == 99 & !is.na(data$uhrswork))
+  
+  # Generate hourly wage 
+  data$wagehr <- data$incwage / (data$weeks * data$uhrswork)
+  
+  # Save the data 
+  write_csv(data, paste0("data/outcome/", i, "_i.csv"))
+}
+```
+
+💭 Exercise: Can you write the code to generate each individual's year of birth and quarter of birth based on the available variables?
+
+#### Generate Other Demographics
+
+```{r}
+years <- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)
+
+for (i in years) {
+  
+data <- read_dta(paste0("data/outcome/", i, "_i.dta"))
+  
+# ****************************************************
+# Marital Status
+# ****************************************************
+  
+    # Generate married indicator 
+    data$marr <- as.numeric(data$marst == 1 | data$marst == 2)
+  
+  
+# ****************************************************
+# Have a child under age 5
+# ****************************************************
+  
+   # Generate child under 5 indicator 
+  data$child5 <- as.numeric(data$nchlt5 > 0 & !is.na(data$nchlt5))
+  
+  ...
+  
+# ****************************************************
+# Keep the relevant variables
+# ****************************************************
+  
+  # Define variable lists 
+  indvar <- c("schooling", "exp", "exp2", "topcoded")
+  
+  depvar <- c("incwage", "wagewk", "wagehr")
+  
+  othervar <- c("year", "sample", "serial", "pernum",
+                "gq", "statefip", "age", "ageg", "age2",
+                "marr", "child5", ...)
+  
+  pweight <- c("perwt")
+  
+  # Combine all variables to keep
+  vars_to_keep <- c(depvar, indvar, othervar, pweight)
+  
+  # Method 1: Shortest - direct subsetting with error handling
+  data_subset <- data[, intersect(vars_to_keep, names(data)), drop = FALSE]
+  
+  # Save the data (equivalent to 'save data/outcome/`i'_pre,replace')
+  write_csv(data_subset, paste0("data/outcome/", i, "_pre.csv"))
+
+}
+  
+```
+
+💭 The code above shows how to create a few demographic variables. Now, try extending it by generating the remaining ones—think about how you would code the rest based on the available data.
+
+### Sample restrictions
+
+```{r}
+years <- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)
+
+for (i in years) {
+  
+  # Load the data 
+  data <- read_dta(paste0("data/outcome/", i, "_pre.dta"))
+  
+  # if we limit the gender to male
+  data <- data[data$male == 1 & !is.na(data$male), ]
+  
+  # keep only the individual with positive income
+  data <- data[data$incwage > 0 & !is.na(data$incwage), ]
+  
+  #touse the missing variables
+    data <- data %>%
+    mutate(
+      touse = complete.cases(select(., incwage, schooling, exp, exp2,
+                                   topcoded, perwt, ...))
+    ) %>%
+    filter(touse)
+    
+  # If we want to have a unlinear model, you can post the log tranformation here 
+
+  # Generate log wage 
+  data$lnwage <- log(data$incwage)
+    
+  write_dta(data, paste0("data/outcome/", i, "_final.dta"))
+  
+}
+
+
+
+```

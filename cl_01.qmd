@@ -1,0 +1,82 @@
+---
+title: "Clean Allocated Values / Combine the datasets  (cl_01)"
+date: "2025-06-14"
+format: html
+execute:
+  warning: false
+  message: false
+  eval: false
+---
+
+## 🎯 Purpose
+
+For this file, your goal is:
+1. Remove allocated values that are not meaningful for further analysis
+2. Merge or split datasets as needed to prepare for the next stage of cleaning and transformation
+
+## Clean up all allocated values
+
+```{r}
+
+# Load data
+data_2000 <- read.xlsx("data/outcome/2000.dta")
+
+# Define quality variable list
+qvarlist <- c("var_1", "var_2"...)
+
+# Remove observations where quality flags are greater than 3 (this is your to-go), then drop the quality variables
+# Note: Definitions for allocated values may vary by variable, so greater than 3 may not be universal, so always double-check the documentation.
+
+for(qvar in qvarlist) {
+  if(qvar %in% names(data_2000)) {
+    data_2000 <- data_2000 %>%
+      filter(!!sym(qvar) <= 3) %>%
+      select(-!!sym(qvar))
+  }
+}
+
+# Save cleaned data
+write.xlsx(data_2000, "data/outcome/2000_i.xlsx")
+```
+
+## Merging the values
+
+Most of the cases, if you not download your dataset from the customized dataset, you will have a zip of documents, and you may need to manually merge them. 
+
+For example, in the [BLS Quarterly Census of Employment and Wages](https://www.bls.gov/cew/), when you download, you may have series of datasets by year, so right now
+
+```{r}
+years <- c(2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022)
+```
+
+
+To merge the files together in R,there are two ways for your to do this:
+1. you can use the bind_rows function, but this approach is only convenient when you don't have so much of the files, and the process can be a little bit of messy
+
+```{r}
+qcew_data_2009 <- read_csv("data/outcome/2009_qcew.csv")
+qcew_data_2010 <- read_csv("data/outcome/2010_qcew.csv")
+...
+
+qcew_combined <- bind_rows(qcew_data_2009, qcew_data_2010, ...)
+
+```
+
+2. When you have many of the years, you can setup a list, and directly merge all the files in the list
+
+```{r}
+file_list <- paste0("data/outcome/", years, "_qcew.csv")
+
+qcew_combined <- map_dfr(file_list, read_csv)
+```
+
+📌 If you encounter an error during this step, check:
+(1) whether the file names are correct, and
+(2) whether the files have matching column structures.
+
+💭 In this section, I demonstrated how to combine separate files into a single dataset. Now, try the opposite—splitting a dataset into parts.
+Also, take a moment to reflect:
+
+ Under what assumptions is it appropriate to combine datasets?
+ 
+ When might it be better to keep them separate?

@@ -1,0 +1,163 @@
+---
+title: "Data Cleaning Example- cl_02"
+format: html
+execute:
+  warning: false
+  message: false
+  eval: false
+---
+
+## 🎯 Purpose
+
+In this step, you will:
+
+1. Create or encode variables that are not directly available in the raw dataset.
+
+2. Rename variables to make them more descriptive and easier to work with.
+
+3. Select and save only the relevant variables needed for analysis.
+
+4. Identify and recode missing values as NA to ensure compatibility with later cleaning steps.
+
+ This step transforms your raw data into a structured, analysis-ready format.
+
+## 🛠️ Key Code Examples for Data Cleaning
+
+###  Replace the N/A values with missing values
+
+For example, in IPUMS, the INCWAGE variable uses values above 999998 to indicate missing data. During cleaning, we recode those values as NA to ensure proper handling in analysis.
+
+```{r}
+data_2000_i <- read.xlsx("data/outcome/2000_i.xlsx")
+
+  data_2000_i <- data_2000_i %>%
+  mutate(incwage = ifelse(incwage >= 999999, NA, incwage))
+
+write.xlsx(data_2000_i, "data/outcome/2000_i.xlsx")
+```
+
+## Generate a variable indicating whether or not the individual's wage is top-coded
+
+Similarly, check the documentation to identify and correctly handle top-coded values.
+
+```{r}
+data_2000_i <- read.xlsx("data/outcome/2000_i.xlsx")
+
+  data_2000_i <- data_2000_i %>%
+  mutate(topcoded = (incwage >= 175000 & incwage < 999999))
+
+write.xlsx(data_2000_i, "data/outcome/2000_i.xlsx")
+```
+
+## Adjust the wage for inflation using the adjustment factors provided by IPUMS
+
+Since the adjustment factor varies by year, you’ll need to check the appropriate [CPI-U multiplier](https://usa.ipums.org/usa/cpi99.shtml) to convert dollar values to constant 1999 dollars. For other datasets, be sure to read the documentation carefully—some may already report inflation-adjusted amounts.
+
+```{r}
+data_2000_i <- read.xlsx("data/outcome/2000_i.xlsx")
+
+  data_2000_i <- data_2000_i %>%
+  mutate(incwage = incwage * 1)
+
+write.xlsx(data_2000_i, "data/outcome/2000_i.xlsx")
+```
+
+
+## Generate Other Variables
+
+📌 To generate consistent variables across multiple files, consider using a loop to automate the process.
+
+For example, if I want to generate consistent definition of age group for my research for all the years, I can : 
+
+```{r}
+# Define years to process
+years <- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)
+
+# Loop through each year
+for(i in years) {
+  
+  # Load data
+  data_i <- read_dta(paste0("data/outcome/", i, "_i.dta"))
+  
+  # Generate age groups
+  data_i %>%
+    mutate(
+      ageg = case_when(
+        age >= 16 & age <= 19 ~ 1,
+        age >= 20 & age <= 29 ~ 2,  
+        age >= 30 & age <= 39 ~ 3,
+        age >= 40 & age <= 49 ~ 4,
+        age >= 50 & age <= 59 ~ 5,
+        TRUE ~ NA_real_             #When none of above conditions are made
+      )
+    )
+  
+  # Save data
+  write_dta(data_i, paste0("data/outcome/", i, "_i.dta"))
+  
+  cat("Processed year", i, "- Age groups created\n")
+}
+
+  # 1: 16-19 years old
+  # 2: 20-29 years old 
+  # 3: 30-39 years old
+  # 4: 40-49 years old
+  # 5: 50-59 years old
+```
+
+
+## Keep the relevant variables
+
+```{r}
+  indvar <- c("ind_var1", "ind_var2",...)  # your independent variable, what we also called explanatory variable
+  depvar <- c("dep_var1", "dep_var2",...)  # your dependent variable
+  othervar <- c("cov_1", "cov_2",  ... )   # other covariates
+  pweight <- c("perwt")                     
+
+  all_vars <- c(depvar, indvar, othervar, pweight)
+
+  data_2000_i <- data_2000_i %>%
+    select(all_of(all_vars))
+
+write_xlsx(data_2000_i, "data/outcome/2000_pre.xlsx")
+# we will call the result in this step as year_pre
+```
+
+📌 The [PERWT](https://usa.ipums.org/usa-action/variables/PERWT#description_section) variable indicates how representative each observation is in reflecting the U.S. population. While it may not be available or necessary in every dataset, it's important to look for this weighting factor.
+
+
+💭 Quick Question:
+What could happen to your analysis or results if you leave out this variable? Take a moment to think about the potential impact. In what situations might you not need to use this variable?
+💡 hint: take a closer look at the definition of this variable. 
+
+📌 In this section, you may have noticed heavy use of indentation. This is intentional—using tabs and consistent indentation is essential in the data cleaning process. It helps organize your code, improves readability, and makes debugging much easier.
+
+For comparison, take a look at the two code examples below. Which one feels clearer or easier to read to you?
+
+```{r}
+data_i %>%
+    mutate(
+      ageg = case_when(
+        age >= 16 & age <= 19 ~ 1,
+        age >= 20 & age <= 29 ~ 2,  
+        age >= 30 & age <= 39 ~ 3,
+        age >= 40 & age <= 49 ~ 4,
+        age >= 50 & age <= 59 ~ 5,
+        TRUE ~ NA_real_             #When none of above conditions are made
+      )
+    )
+```
+
+```{r}
+data_i %>%
+mutate(
+ageg = case_when(
+age >= 16 & age <= 19 ~ 1,
+age >= 20 & age <= 29 ~ 2,  
+age >= 30 & age <= 39 ~ 3,
+age >= 40 & age <= 49 ~ 4,
+age >= 50 & age <= 59 ~ 5,
+TRUE ~ NA_real_             #When none of above conditions are made
+)
+)
+```

@@ -1,0 +1,144 @@
+---
+title: "Data Organization"
+author: "Xiaoyi"
+date: "2009-05-21"
+format: html
+execute:
+  warning: false
+  message: false
+  eval: false
+---
+
+## Overview of the Data Cleaning Procedure
+
+## Setup: _master
+
+The Functions of the basic packages
+
+```{r setup}
+#| label: setup
+#| include: true
+
+# Data manipulation and transformation
+library(dplyr)      # Grammar of data manipulation - filter, select, mutate, summarize, group_by
+
+# Data import/export
+library(readr)      # Fast and user-friendly reading of rectangular data (CSV, TSV, etc.)
+library(haven)      # Reading and writing data from statistical software (Stata, SPSS, SAS)
+
+# Data reshaping and tidying
+library(tidyr)      # Tools for reshaping data - pivot_longer, pivot_wider, separate, unite
+
+# Data visualization
+library(ggplot2)    # Grammar of graphics for creating complex, layered plots
+
+# Reproducible reporting
+library(knitr)      # Dynamic report generation - combine R code with text
+library(here)       # Portable file path construction relative to project root
+library(quarto)     # Scientific publishing system for documents, presentations, websites
+```
+
+### Set working directory
+
+We usually set this up in the master file, so the working directory only needs to be changed once. This makes it easier when submitting your code---reviewers can run everything without modifying multiple files.
+
+```{r}
+# change this to your local directory
+setwd("/Users/zhaoxiaoxiao/Desktop/2000 Educ_Return_R")
+```
+
+## Part I: Data Cleaning Process
+
+### Step 1: Data Import and Renaming {#sec-step1}
+
+Download data from IPUMS in Stata format and rename by year.
+
+```{r step1}
+#| label: data-import
+#| eval: false
+
+# Execute data import and renaming script
+quarto_render("program/cl_00.qmd")
+```
+
+**Purpose:** Import raw data files and establish consistent naming conventions by survey year.
+
+### Step 2: Clean Allocated Values {#sec-step2}
+
+Remove or flag all allocated values in the dataset.
+
+```{r step2}
+#| label: clean-allocated
+#| eval: false
+
+# Clean up all allocated values
+quarto_render("program/cl_01.qmd")
+```
+
+**Purpose:** Ensure data quality by handling allocated/imputed values that may introduce bias in our analysis.
+
+### Step 3: Variable Generation and Transformation {#sec-step3}
+
+This step involves multiple sub-processes to create analysis-ready variables:
+
+```{r step3}
+#| label: variable-generation
+#| eval: false
+
+# Generate and keep relevant variables
+quarto_render("program/cl_02.qmd")
+```
+
+**Key transformations include:**
+
+a.  **Missing Value Treatment**: Replace N/A values with proper missing value codes
+b.  **Top-coding Indicator**: Generate variable indicating whether individual's wage is top-coded
+c.  **Inflation Adjustment**: Adjust wages for inflation using appropriate price indices
+d.  **Education Variables**:
+    -   Recode education variable
+    -   Generate potential experience
+    -   Generate education variable for spouse
+e.  **Earnings Variables**: Create standardized earnings measures
+f.  **Covariates**: Generate and retain other relevant control variables
+
+### Step 4: Sample Restrictions {#sec-step4}
+
+Apply sample restrictions to create the final analytical dataset.
+
+```{r step4}
+#| label: sample-restrictions
+#| eval: false
+
+# Apply sample restrictions
+quarto_render("program/cl_03.qmd")
+```
+
+**Purpose:** Implement inclusion/exclusion criteria to define the population of interest for the returns to education analysis.
+
+## Data Processing Summary
+
+The data cleaning process follows a systematic approach:
+
+1.  **Raw Data Import** → Standardized file structure
+2.  **Quality Control** → Remove problematic allocated values\
+3.  **Feature Engineering** → Create analysis variables
+4.  **Sample Definition** → Apply research-specific restrictions
+
+
+## File Structure
+
+```         
+project/
+├── program/
+|   ├── _master.R  # Organize all the files under, set the main working directory
+│   ├── cl_00.R    # Data import and renaming
+│   ├── cl_01.R    # Clean allocated values
+│   ├── cl_02.R    # Variable generation
+│   └── cl_03.R    # Sample restrictions
+├── data/
+|   ├── source     # storage of the raw datasets
+|   └── output     # storage of cleaned datasets
+├── log/           # storage of the results of data analysis 
+├── graph/         # storage of graphs
+└── reference/     # reference of your research
+```

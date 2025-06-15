@@ -1,0 +1,57 @@
+---
+title: "Data Analysis (an_01)"
+date: "2025-06-14"
+format: html
+execute:
+  warning: false
+  message: false
+  eval: false
+---
+
+## 🎯 Purpose
+
+For this file, your goal is to:
+
+1. Run the most fundamental analysis that supports your core research question
+
+2. Save the regression results in LaTeX format for easy integration into your report or paper
+
+
+## Construct the Regression Formula
+
+📌 The first thing you’ll want to do is set up a list of variables you’ll use in your analysis. That way, if you ever want to make changes, you only need to update it in one spot. We usually define this list as othervar near the bottom of cl_02. It’s a simple trick that makes your code more flexible—kind of like a “forward-looking” move, as economists might say.
+
+```{r}
+data_2000 <- read_csv("data/source/your cl_03 result.csv")
+
+varlist <- c("cov_1", "cov_2", "cov_3", ...)
+```
+
+After you setting up this, you can start to write up your model 
+
+```{r}
+formula_1 <- paste("dep_var1 ~ ind_var1 + ind_var2 +", varlist)
+
+model_1 <- lm(formula_1, data = data_2000)
+
+formula_2 <- paste("dep_var2 ~ ind_var1 + ind_var2 +", varlist)
+
+model_2 <- lm(formula_2, data = data_2000)
+
+```
+
+📌 The models I’ve written here are just examples—you’re encouraged to define your own. You can use different variables, try alternative specifications, or even work with different datasets. The key is to present your comparisons clearly, so your audience can easily understand the point you're trying to make. 
+
+## Generate the table 
+
+
+```{r}
+stargazer(model_1, model_2,
+          type = "text",  
+          # my personal habit is to store the table in text file
+          title = "Basic Analysis",
+          align = TRUE,
+          out = "the name you assigned to the file of table")
+```
+📌 you can refer [this guild](https://cran.r-project.org/web/packages/stargazer/stargazer.pdf) in exploring how you can use this function to produce the tables. 
+

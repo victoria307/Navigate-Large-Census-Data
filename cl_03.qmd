@@ -1,0 +1,62 @@
+---
+title: "Sample Restrictions (cl_03)"
+date: "2025-06-14"
+format: html
+execute:
+  warning: false
+  message: false
+  eval: false
+---
+
+## 🎯 Purpose
+
+For this file, your goal is: 
+1. Filter the dataset to include only the observations relevant to your research question 
+2. Clean missing values by identifying and handling incomplete or unusable entries
+3. Save a final, analysis-ready dataset that’s structured and scoped for your specific study
+
+## Further limitation
+
+```{r}
+
+# Load the dataset you cleaned 
+data_2000_pre <- read.xlsx("data/outcome/2000_pre.xlsx")
+
+```
+
+Apply any sample restrictions relevant to your analysis.
+
+For example, a common one is to exclude individuals in group quarters.
+
+Keep only those living in households.
+```{r}
+
+  data_2000_pre <- data_2000_pre %>%
+    filter(gq %in% c(1, 2, 5))
+```
+📌 You may have noticed that there are many variables you didn’t initially consider, but they turn out to be essential for your analysis. One example is [Group Quarters](https://usa.ipums.org/usa-action/variables/GQ#codes_section) (GQ)—a detail that can significantly affect interpretation but is easy to overlook.
+
+💭 Why might we want to set a limitation based on group quarters? Can you identify other variables that are often treated as “default” controls in empirical analysis?
+
+
+## Missing value restrictions
+
+```{r}
+# Keep only individuals without missing values in the variables we need later
+
+  data_2000_pre <- data_2000_pre %>%
+    mutate(
+      touse = complete.cases(select(., incwage, schooling, schooling_sp, exp, exp2, 
+                                   topcoded, topcoded_uhr, perwt, ageg, race, marr, 
+                                   immigrant, region, statefip, origin, wagehr, wagewk))
+    ) %>%
+    filter(touse)  # <- Refined version
+
+```
+
+## Save the final dataset for Analysis
+
+```{r}
+
+write.xlsx(data_2000_pre, "data/outcome/2000_final.xlsx")
+```

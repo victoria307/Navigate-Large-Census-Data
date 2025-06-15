@@ -1,0 +1,57 @@
+
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Navigate with Large Census Data"
+  description: "A comprehensive guide to data accessing and cleaning with R"
+  
+  navbar:
+    background: primary
+    search: true
+    
+  sidebar:
+    style: "docked"
+    background: light
+    collapse-level: 2
+    contents:
+      - text: "Data organization"
+        href: data_organization.qmd
+        
+      - section: "Data Cleaning"
+        contents:
+          - text: "Step 1: Inporting the Data"
+            href: cl_00.qmd
+          - text: "Step 2: Clean the Allocated Values"
+            href: cl_01.qmd
+          - text: "Step 3: Generate/recode the values"
+            href: cl_02.qmd
+          - text: "Step 4: Filtering and Clean out the missing values"
+            href: cl_03.qmd
+            
+      - section: "Data Analysis"
+        contents:
+          - text: "Basic Analysis Overview"
+            href: an_01.qmd
+            
+      - section: "Examples"
+        contents:
+          - text: "Replication of AK Model"
+            href: example_1.qmd
+
+format:
+  html:
+    theme: 
+      - cosmo
+      - custom.scss
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-tools: true
+    number-sections: true
+
+execute:
+  freeze: auto
+

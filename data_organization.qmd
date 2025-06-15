@@ -1,0 +1,179 @@
+---
+title: "Data Organization"
+date: "2025-06-14"
+format: html
+execute:
+  warning: false
+  message: false
+  eval: false
+---
+
+## 📋 Overview of the Data Cleaning Procedure: the \_master file
+
+The \_master file serves as the central script that organizes all your data cleaning and analysis steps. In most research projects, you'll eventually need to submit your code---having a well-structured master file ensures that reviewers (or your future self) can reproduce the results easily by running just one file.
+
+## Setup
+
+The Functions of the basic packages
+
+```{r setup}
+#| label: setup
+#| include: true
+
+# Data manipulation and transformation
+library(dplyr)      # Grammar of data manipulation - filter, select, mutate, summarize, group_by
+
+# Data import/export
+library(readr)      # Fast and user-friendly reading of rectangular data (CSV, TSV, etc.)
+library(haven)      # Reading and writing data from statistical software (Stata, SPSS, SAS)
+
+# Data reshaping and tidying
+library(tidyr)      # Tools for reshaping data - pivot_longer, pivot_wider, separate, unite
+
+# Data visualization
+library(ggplot2)    # Grammar of graphics for creating complex, layered plots
+
+# Reproducible reporting
+library(knitr)      # Dynamic report generation - combine R code with text
+library(here)       # Portable file path construction relative to project root
+library(quarto)     # Scientific publishing system for documents, presentations, websites
+
+# Display the result of analysis 
+library(stragazer)  # Display the regression result clealy in latex format
+```
+
+### Set working directory
+
+We typically define the working directory in the master file, so it only needs to be set once. This simplifies code submission---reviewers can run everything without adjusting multiple scripts.
+
+```{r}
+# change this to your local directory
+setwd("/Users/zhaoxiaoxiao/Desktop/2000 Educ_Return_R")
+```
+
+## Part I: Data Cleaning Process
+
+### Step 1: Data Import and Renaming {#sec-step1}
+
+Rename the dataset using a clear, descriptive name, and convert it to the desired format at this stage.
+
+```{r step1}
+#| label: data-import
+#| eval: false
+
+# Execute data import and renaming script
+quarto_render("program/cl_00.qmd")
+```
+
+### Step 2: Clean Allocated Values / Combine the datasets {#sec-step2}
+
+In this step, we remove any allocated or imputed values to maintain data quality and transparency.
+
+If the dataset does not contain allocated values, this step is used to merge multiple raw files---for example, when data comes in separate parts by geography or time.
+
+📌 Be sure to clearly document the merging logic and assumptions, especially if the source files were not designed to be combined automatically.
+
+```{r step2}
+#| label: clean-allocated
+#| eval: false
+
+# Clean up all allocated values
+quarto_render("program/cl_01.qmd")
+```
+
+### Step 3: Variable Generation and Transformation {#sec-step3}
+
+This is where most of the data cleaning happens---you'll recode variables, create new ones, and keep only what you need for analysis.
+
+```{r step3}
+#| label: variable-generation
+#| eval: false
+
+# Generate and keep relevant variables
+quarto_render("program/cl_02.qmd")
+```
+
+**Key transformations include:**
+
+a.  **Missing Value Treatment**: Replace missing value codes into na
+b.  **Top-coding Indicator**: Generate variable indicating whether the value is topcoded (for example, income)
+c.  **Inflation Adjustment**: Adjust for inflation using appropriate price indices (we ususally need this step when we talk about price and income)
+d.  **Recode and Create Variables**: Convert categorical values to numeric, group variables, or build new ones for analysis.
+e.  **Save What You Need**: Keep only the cleaned, final set of variables for modeling or visualization
+
+### Step 4: Sample Restrictions {#sec-step4}
+
+Apply sample restrictions to create the final analytical dataset.
+
+```{r step4}
+#| label: sample-restrictions
+#| eval: false
+
+# Apply sample restrictions
+quarto_render("program/cl_03.qmd")
+```
+
+**Purpose:** Implement inclusion/exclusion criteria to define the population of interest.
+
+## Data Analyzing
+
+```{r}
+# Run your most basic analysis
+quarto_render("program/an_01.qmd")
+```
+
+## Data Processing Summary
+
+The data cleaning process follows a systematic approach:
+
+1.  **Raw Data Import** → Standardized file structure
+2.  **Quality Control** → Remove problematic allocated values\
+3.  **Feature Engineering** → Create analysis variables
+4.  **Sample Definition** → Apply research-specific restrictions
+
+## File Structure
+
+```         
+project/
+├── program/
+|   ├── _master.qmd  # Organize all the files under, set the main working directory
+│   ├── cl_00.qmd    # Data import and renaming
+│   ├── cl_01.qmd    # Clean allocated values
+│   ├── cl_02.qmd    # Variable generation
+│   ├── cl_03.qmd    # Sample restrictions
+|   ├── an_01.qmd    # This will be your basic model result
+|   └── ...          # Other model that you want to build
+├── data/
+|   ├── source     # storage of the raw datasets
+|   └── output     # storage of cleaned datasets
+├── log/           # storage of the results of data analysis 
+├── graph/         # storage of graphs
+└── reference/     # reference of your research
+```
+
+## 📌 Note
+
+1.  If you're working with more than one raw dataset, it's good practice to create a separate cleaning script for each one. For example:
+
+```{r}
+quarto_render("program/cl_01_acs.qmd")  # Load the acs data
+
+quarto_render("program/cl_01_cps.qmd")  # Load the cps data
+```
+
+If the datasets need to be merged, write a dedicated merge script
+
+```{r}
+quarto_render("program/cl_04_merge.qmd")
+```
+
+2.  Your \_master script should do more than just run your code---it should also:
+
+<!-- -->
+
+(i) Describe the purpose of each cleaning and analysis file
+(ii) Clearly label each stage of the workflow (e.g., cleaning, merging, modeling)
+(iii) Help collaborators or reviewers understand the flow of your project at a glance
+
+<!-- -->
+
