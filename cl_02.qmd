@@ -29,12 +29,12 @@ In this step, you will:
 For example, in IPUMS, the INCWAGE variable uses values above 999998 to indicate missing data. During cleaning, we recode those values as NA to ensure proper handling in analysis.
 
 ```{r}
-data_2000_i <- read.xlsx("data/outcome/2000_i.xlsx")
+data_2000_i <- read_csv("data/outcome/2000_i.csv")
 
   data_2000_i <- data_2000_i %>%
   mutate(incwage = ifelse(incwage >= 999999, NA, incwage))
 
-write.xlsx(data_2000_i, "data/outcome/2000_i.xlsx")
+write_csv(data_2000_i, "data/outcome/2000_i.csv")
 ```
 
 ## Generate a variable indicating whether or not the individual's wage is top-coded
@@ -42,12 +42,12 @@ write.xlsx(data_2000_i, "data/outcome/2000_i.xlsx")
 Similarly, check the documentation to identify and correctly handle top-coded values.
 
 ```{r}
-data_2000_i <- read.xlsx("data/outcome/2000_i.xlsx")
+data_2000_i <- read_csv("data/outcome/2000_i.csv")
 
   data_2000_i <- data_2000_i %>%
   mutate(topcoded = (incwage >= 175000 & incwage < 999999))
 
-write.xlsx(data_2000_i, "data/outcome/2000_i.xlsx")
+write_csv(data_2000_i, "data/outcome/2000_i.csv")
 ```
 
 ## Adjust the wage for inflation using the adjustment factors provided by IPUMS
@@ -55,12 +55,12 @@ write.xlsx(data_2000_i, "data/outcome/2000_i.xlsx")
 Since the adjustment factor varies by year, you’ll need to check the appropriate [CPI-U multiplier](https://usa.ipums.org/usa/cpi99.shtml) to convert dollar values to constant 1999 dollars. For other datasets, be sure to read the documentation carefully—some may already report inflation-adjusted amounts.
 
 ```{r}
-data_2000_i <- read.xlsx("data/outcome/2000_i.xlsx")
+data_2000_i <- read_csv("data/outcome/2000_i.csv")
 
   data_2000_i <- data_2000_i %>%
   mutate(incwage = incwage * 1)
 
-write.xlsx(data_2000_i, "data/outcome/2000_i.xlsx")
+write_csv(data_2000_i, "data/outcome/2000_i.csv")
 ```
 
 
@@ -78,7 +78,7 @@ years <- c(1980, 2005, 2006, 2007, 2019, 2020, 2021, 2023)
 for(i in years) {
   
   # Load data
-  data_i <- read_dta(paste0("data/outcome/", i, "_i.dta"))
+  data_i <- read_csv(paste0("data/outcome/", i, "_i.csv"))
   
   # Generate age groups
   data_i %>%
@@ -94,9 +94,8 @@ for(i in years) {
     )
   
   # Save data
-  write_dta(data_i, paste0("data/outcome/", i, "_i.dta"))
+  write_csv(data_i, paste0("data/outcome/", i, "_i.csv"))
   
-  cat("Processed year", i, "- Age groups created\n")
 }
 
   # 1: 16-19 years old
@@ -120,7 +119,7 @@ for(i in years) {
   data_2000_i <- data_2000_i %>%
     select(all_of(all_vars))
 
-write_xlsx(data_2000_i, "data/outcome/2000_pre.xlsx")
+write_csv(data_2000_i, "data/outcome/2000_pre.csv")
 # we will call the result in this step as year_pre
 ```
 

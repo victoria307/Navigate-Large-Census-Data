@@ -19,7 +19,7 @@ For this file, your goal is:
 ```{r}
 
 # Load data
-data_2000 <- read.xlsx("data/outcome/2000.dta")
+data_2000 <- read_csv("data/outcome/2000.csv")
 
 # Define quality variable list
 qvarlist <- c("var_1", "var_2"...)
@@ -36,7 +36,7 @@ for(qvar in qvarlist) {
 }
 
 # Save cleaned data
-write.xlsx(data_2000, "data/outcome/2000_i.xlsx")
+write_csv(data_2000, "data/outcome/2000_i.csv")
 ```
 
 ## Merging the values

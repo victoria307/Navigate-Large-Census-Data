@@ -257,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2" class="anchored" data-anchor-id="further-limitation"><span class="header-section-number">2</span> Further limitation</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset you cleaned </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data_2000_pre <span class="ot">&lt;-</span> <span class="fu">read.xlsx</span>(<span class="st">"data/outcome/2000_pre.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data_2000_pre <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/outcome/2000_pre.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Apply any sample restrictions relevant to your analysis.</p>
 <p>For example, a common one is to exclude individuals in group quarters.</p>
@@ -286,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="save-the-final-dataset-for-analysis" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="save-the-final-dataset-for-analysis"><span class="header-section-number">4</span> Save the final dataset for Analysis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.xlsx</span>(data_2000_pre, <span class="st">"data/outcome/2000_final.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(data_2000_pre, <span class="st">"data/outcome/2000_final.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -600,7 +600,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset you cleaned </span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>data_2000_pre <span class="ot">&lt;-</span> <span class="fu">read.xlsx</span>(<span class="st">"data/outcome/2000_pre.xlsx"</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>data_2000_pre <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/outcome/2000_pre.csv"</span>)</span>
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
@@ -636,7 +636,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="fu">## Save the final dataset for Analysis</span></span>
 <span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="fu">write.xlsx</span>(data_2000_pre, <span class="st">"data/outcome/2000_final.xlsx"</span>)</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(data_2000_pre, <span class="st">"data/outcome/2000_final.csv"</span>)</span>
 <span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
