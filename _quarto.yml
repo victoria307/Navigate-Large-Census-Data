@@ -16,12 +16,19 @@ website:
     background: light
     collapse-level: 2
     contents:
+      - section: "Data Access"
+        contents:
+          - text: "Identifying and Finding the Right Dataset"
+            href: da_01.qmd
+          - text: "Downloading and Accessing Data"
+            href: da_02.qmd
+      
       - text: "Data organization"
         href: data_organization.qmd
-        
+      
       - section: "Data Cleaning"
         contents:
-          - text: "Step 1: Inporting the Data"
+          - text: "Step 1: Importing the Data"
             href: cl_00.qmd
           - text: "Step 2: Clean the Allocated Values"
             href: cl_01.qmd
@@ -29,12 +36,12 @@ website:
             href: cl_02.qmd
           - text: "Step 4: Filtering and Clean out the missing values"
             href: cl_03.qmd
-            
+      
       - section: "Data Analysis"
         contents:
           - text: "Basic Analysis Overview"
             href: an_01.qmd
-            
+      
       - section: "Examples"
         contents:
           - text: "Replication of AK Model"

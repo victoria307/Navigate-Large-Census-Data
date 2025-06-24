@@ -1,0 +1,78 @@
+---
+title: "Identifying the Data"
+date: "2025-06-24"
+format: html
+execute:
+  warning: false
+  message: false
+  eval: false
+---
+
+## 🎯 Purpose
+
+The purpose of this page is to provide an introduction to the data access process when starting a research project. We'll walk through key steps and tools you'll need to locate and retrieve meaningful data from public sources like the U.S. Census.
+
+This page covers:
+
+1.  ️ An introduction to census data: what it is and why we use it\
+2.  How to identify and select the *right* dataset for your research question\
+3.  Common issues you might encounter---and how to troubleshoot them
+
+### What is Census data? Why we use it
+
+Census data are official statistics collected systematically by governments to capture demographic, economic, and social information about the population [^1].
+
+[^1]: [What is Census?](https://education.nationalgeographic.org/resource/census-article/)
+
+Census data is a powerful resource for researchers for several key reasons:
+
+1.  **Longitudinal Coverage**\
+    Offers data across many years, making it ideal for studying trends over time.
+
+2.  **Relatively Clean Format**\
+    Public-use datasets are well-documented and often come pre-processed, saving time on data wrangling.
+
+3.  **Rich, Multi-Dimensional Information**\
+    Includes demographic, economic, housing, and geographic variables---useful across many research fields.
+
+4.  **Representative Sample**\
+    Designed to reflect the broader population, allowing for generalizable insights.
+
+### Source of Census Data
+
+Census and survey data can be accessed from a variety of sources depending on your research needs:
+
+1.**Public Agencies**
+
+-   **Bureau of Labor Statistics (BLS)**\
+    Employment, wages, and unemployment rates from datasets such as:
+    -   CPS (Current Population Survey)\
+    -   QCEW (Quarterly Census of Employment and Wages)\
+    -   LAUS (Local Area Unemployment Statistics)
+-   **Census Bureau**\
+    Population, economic, housing data from:
+    -   ACS (American Community Survey)\
+    -   Decennial Census\
+    -   SIPP (Survey of Income and Program Participation)
+-   **Federal Reserve**\
+    Financial and consumer data, including:
+    -   FRED (Federal Reserve Economic Data)\
+    -   SCF (Survey of Consumer Finances)
+
+2.  **International Organizations**
+
+-   Global development indicators and demographic data (e.g., World Bank, IMF, UN)
+
+3.  **State Government**
+
+-   State-level data on employment, education, health, and more
+
+4.  **Academic Data Archives**
+
+-   **IPUMS** -- Integrated Public Use Microdata Series for harmonized census and survey data
+
+5.  **Direct Data Requests**
+
+-   Custom requests through data repositories or agency contacts
+
+### How to Identify Key Information in a Dataset
