@@ -22,6 +22,8 @@ website:
             href: da_01.qmd
           - text: "Downloading and Accessing Data"
             href: da_02.qmd
+          - text: "Working with Maps: Tigris and Geocoding"
+            href: da_03.qmd
       
       - text: "Data organization"
         href: data_organization.qmd

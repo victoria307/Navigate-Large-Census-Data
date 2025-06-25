@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-06-14">
+<meta name="dcterms.date" content="2025-06-24">
 
-<title>Navigate with Large Census Data - Clean Allocated Values / Combine the datasets (cl_01)</title>
+<title>Navigate with Large Census Data - Identifying the Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cl_00.html">Data Cleaning</a></li><li class="breadcrumb-item"><a href="./cl_01.html">Step 2: Clean the Allocated Values</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./da_01.html">Data Access</a></li><li class="breadcrumb-item"><a href="./da_01.html">Identifying and Finding the Right Dataset</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -142,7 +142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./da_01.html" class="sidebar-item-text sidebar-link">
+  <a href="./da_01.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Identifying and Finding the Right Dataset</span></a>
   </div>
 </li>
@@ -183,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cl_01.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cl_01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Step 2: Clean the Allocated Values</span></a>
   </div>
 </li>
@@ -245,9 +245,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">1</span> 🎯 Purpose</a></li>
-  <li><a href="#clean-up-all-allocated-values" id="toc-clean-up-all-allocated-values" class="nav-link" data-scroll-target="#clean-up-all-allocated-values"><span class="header-section-number">2</span> Clean up all allocated values</a></li>
-  <li><a href="#merging-the-values" id="toc-merging-the-values" class="nav-link" data-scroll-target="#merging-the-values"><span class="header-section-number">3</span> Merging the values</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">1</span> 🎯 Purpose</a>
+  <ul class="collapse">
+  <li><a href="#what-is-census-data-why-we-use-it" id="toc-what-is-census-data-why-we-use-it" class="nav-link" data-scroll-target="#what-is-census-data-why-we-use-it"><span class="header-section-number">1.1</span> What is Census data? Why we use it</a></li>
+  <li><a href="#source-of-census-data" id="toc-source-of-census-data" class="nav-link" data-scroll-target="#source-of-census-data"><span class="header-section-number">1.2</span> Source of Census Data</a></li>
+  <li><a href="#how-to-identify-key-information-in-a-dataset" id="toc-how-to-identify-key-information-in-a-dataset" class="nav-link" data-scroll-target="#how-to-identify-key-information-in-a-dataset"><span class="header-section-number">1.3</span> How to Identify Key Information in a Dataset</a></li>
+  <li><a href="#tips-for-selecting-the-right-dataset" id="toc-tips-for-selecting-the-right-dataset" class="nav-link" data-scroll-target="#tips-for-selecting-the-right-dataset"><span class="header-section-number">1.4</span> Tips for selecting the right dataset</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -256,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Clean Allocated Values / Combine the datasets (cl_01)</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Identifying the Data</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -267,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 14, 2025</p>
+      <p class="date">June 24, 2025</p>
     </div>
   </div>
   
@@ -279,66 +283,126 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="purpose" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">1</span> 🎯 Purpose</h2>
-<p>For this file, your goal is: 1. Remove allocated values that are not meaningful for further analysis 2. Merge or split datasets as needed to prepare for the next stage of cleaning and transformation</p>
-</section>
-<section id="clean-up-all-allocated-values" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="clean-up-all-allocated-values"><span class="header-section-number">2</span> Clean up all allocated values</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data_2000 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/outcome/2000.csv"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define quality variable list</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>qvarlist <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"var_1"</span>, <span class="st">"var_2"</span>...)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove observations where quality flags are greater than 3 (this is your to-go), then drop the quality variables</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Definitions for allocated values may vary by variable, so greater than 3 may not be universal, so always double-check the documentation.</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(qvar <span class="cf">in</span> qvarlist) {</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(qvar <span class="sc">%in%</span> <span class="fu">names</span>(data_2000)) {</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    data_2000 <span class="ot">&lt;-</span> data_2000 <span class="sc">%&gt;%</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="sc">!!</span><span class="fu">sym</span>(qvar) <span class="sc">&lt;=</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="sc">-!!</span><span class="fu">sym</span>(qvar))</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Save cleaned data</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(data_2000, <span class="st">"data/outcome/2000_i.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="merging-the-values" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="merging-the-values"><span class="header-section-number">3</span> Merging the values</h2>
-<p>Most of the cases, if you not download your dataset from the customized dataset, you will have a zip of documents, and you may need to manually merge them.</p>
-<p>For example, in the <a href="https://www.bls.gov/cew/">BLS Quarterly Census of Employment and Wages</a>, when you download, you may have series of datasets by year, so right now</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">2010</span>, <span class="dv">2011</span>, <span class="dv">2012</span>, <span class="dv">2013</span>, <span class="dv">2014</span>, <span class="dv">2015</span>, <span class="dv">2016</span>, <span class="dv">2017</span>, <span class="dv">2018</span>, <span class="dv">2019</span>, <span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>To merge the files together in R,there are two ways for your to do this: 1. you can use the bind_rows function, but this approach is only convenient when you don’t have so much of the files, and the process can be a little bit of messy</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>qcew_data_2009 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/outcome/2009_qcew.csv"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>qcew_data_2010 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/outcome/2010_qcew.csv"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>qcew_combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(qcew_data_2009, qcew_data_2010, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ol start="2" type="1">
-<li>When you have many of the years, you can setup a list, and directly merge all the files in the list</li>
+<p>The purpose of this page is to provide an introduction to the data access process when starting a research project. We’ll walk through key steps and tools you’ll need to locate and retrieve meaningful data from public sources like the U.S. Census.</p>
+<p>This page covers:</p>
+<ol type="1">
+<li>️ An introduction to census data: what it is and why we use it<br>
+</li>
+<li>How to identify and select the <em>right</em> dataset for your research question<br>
+</li>
+<li>Common issues you might encounter—and how to troubleshoot them</li>
 </ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_list <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"data/outcome/"</span>, years, <span class="st">"_qcew.csv"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>qcew_combined <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(file_list, read_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>📌 If you encounter an error during this step, check: (1) whether the file names are correct, and (2) whether the files have matching column structures.</p>
-<p>💭 In this section, I demonstrated how to combine separate files into a single dataset. Now, try the opposite—splitting a dataset into parts. Also, take a moment to reflect:</p>
-<p>Under what assumptions is it appropriate to combine datasets?</p>
-<p>When might it be better to keep them separate?</p>
+<section id="what-is-census-data-why-we-use-it" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="what-is-census-data-why-we-use-it"><span class="header-section-number">1.1</span> What is Census data? Why we use it</h3>
+<p>Census data are official statistics collected systematically by governments to capture demographic, economic, and social information about the population <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Census data is a powerful resource for researchers for several key reasons:</p>
+<ol type="1">
+<li><p><strong>Longitudinal Coverage</strong><br>
+Offers data across many years, making it ideal for studying trends over time.</p></li>
+<li><p><strong>Relatively Clean Format</strong><br>
+Public-use datasets are well-documented and often come pre-processed, saving time on data wrangling.</p></li>
+<li><p><strong>Rich, Multi-Dimensional Information</strong><br>
+Includes demographic, economic, housing, and geographic variables—useful across many research fields.</p></li>
+<li><p><strong>Representative Sample</strong><br>
+Designed to reflect the broader population, allowing for generalizable insights.</p></li>
+</ol>
+</section>
+<section id="source-of-census-data" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="source-of-census-data"><span class="header-section-number">1.2</span> Source of Census Data</h3>
+<p>Census and survey data can be accessed from a variety of sources depending on your research needs:</p>
+<p>1.<strong>Public Agencies</strong></p>
+<ul>
+<li><strong>Bureau of Labor Statistics (BLS)</strong><br>
+Employment, wages, and unemployment rates from datasets such as:
+<ul>
+<li>CPS (Current Population Survey)<br>
+</li>
+<li>QCEW (Quarterly Census of Employment and Wages)<br>
+</li>
+<li>LAUS (Local Area Unemployment Statistics)</li>
+</ul></li>
+<li><strong>Census Bureau</strong><br>
+Population, economic, housing data from:
+<ul>
+<li>ACS (American Community Survey)<br>
+</li>
+<li>Decennial Census<br>
+</li>
+<li>SIPP (Survey of Income and Program Participation)</li>
+</ul></li>
+<li><strong>Federal Reserve</strong><br>
+Financial and consumer data, including:
+<ul>
+<li>FRED (Federal Reserve Economic Data)<br>
+</li>
+<li>SCF (Survey of Consumer Finances)</li>
+</ul></li>
+</ul>
+<ol start="2" type="1">
+<li><strong>International Organizations</strong></li>
+</ol>
+<ul>
+<li>Global development indicators and demographic data (e.g., World Bank, IMF, UN)</li>
+</ul>
+<ol start="3" type="1">
+<li><strong>State Government</strong></li>
+</ol>
+<ul>
+<li>State-level data on employment, education, health, and more</li>
+</ul>
+<ol start="4" type="1">
+<li><strong>Academic Data Archives</strong></li>
+</ol>
+<ul>
+<li><strong>IPUMS</strong> – Integrated Public Use Microdata Series for harmonized census and survey data</li>
+</ul>
+<ol start="5" type="1">
+<li><strong>Direct Data Requests</strong></li>
+</ol>
+<ul>
+<li>Custom requests through data repositories or agency contacts</li>
+</ul>
+</section>
+<section id="how-to-identify-key-information-in-a-dataset" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="how-to-identify-key-information-in-a-dataset"><span class="header-section-number">1.3</span> How to Identify Key Information in a Dataset</h3>
+<ul>
+<li><p><strong>Geographical &amp; Temporal Coverage</strong><br>
+National, regional, state, or local levels<br>
+Annual, quarterly, monthly, or one-time collection</p></li>
+<li><p><strong>Variable Definitions</strong><br>
+Understand how variables are constructed (e.g., age groups, inflation-adjusted prices)</p></li>
+<li><p><strong>Survey Design &amp; Dataset Type</strong><br>
+Cross-sectional vs.&nbsp;longitudinal<br>
+Sample design: random, stratified, weighted</p></li>
+</ul>
+</section>
+<section id="tips-for-selecting-the-right-dataset" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="tips-for-selecting-the-right-dataset"><span class="header-section-number">1.4</span> Tips for selecting the right dataset</h3>
+<ul>
+<li>Identify the core variables needed for your research</li>
+<li>Match the dataset’s geography and time coverage to your question</li>
+<li>Look for unique identifiers (e.g., FIPS codes) to support merging</li>
+<li>Choose datasets that are easy to access and compatible with your tools</li>
+</ul>
+<p>📌 When collecting data, it’s common to realize that no single dataset contains everything you need. A practical approach is to:</p>
+<ol type="1">
+<li><strong>Assess what’s possible</strong> with the data you already have.</li>
+<li><strong>Identify complementary datasets</strong> that can be merged — this is especially helpful when working with aggregate-level data.</li>
+</ol>
 
 
 <!-- -->
 
 </section>
+</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://education.nationalgeographic.org/resource/census-article/">What is Census?</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -623,88 +687,107 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Clean Allocated Values / Combine the datasets  (cl_01)"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2025-06-14"</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">  message: false</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">  eval: false</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🎯 Purpose</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>For this file, your goal is:</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Remove allocated values that are not meaningful for further analysis</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Merge or split datasets as needed to prepare for the next stage of cleaning and transformation</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Clean up all allocated values</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>data_2000 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/outcome/2000.csv"</span>)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Define quality variable list</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>qvarlist <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"var_1"</span>, <span class="st">"var_2"</span>...)</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove observations where quality flags are greater than 3 (this is your to-go), then drop the quality variables</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: Definitions for allocated values may vary by variable, so greater than 3 may not be universal, so always double-check the documentation.</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(qvar <span class="cf">in</span> qvarlist) {</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(qvar <span class="sc">%in%</span> <span class="fu">names</span>(data_2000)) {</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    data_2000 <span class="ot">&lt;-</span> data_2000 <span class="sc">%&gt;%</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(<span class="sc">!!</span><span class="fu">sym</span>(qvar) <span class="sc">&lt;=</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(<span class="sc">-!!</span><span class="fu">sym</span>(qvar))</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Save cleaned data</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(data_2000, <span class="st">"data/outcome/2000_i.csv"</span>)</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## Merging the values</span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>Most of the cases, if you not download your dataset from the customized dataset, you will have a zip of documents, and you may need to manually merge them. </span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>For example, in the <span class="co">[</span><span class="ot">BLS Quarterly Census of Employment and Wages</span><span class="co">](https://www.bls.gov/cew/)</span>, when you download, you may have series of datasets by year, so right now</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2009</span>, <span class="dv">2010</span>, <span class="dv">2011</span>, <span class="dv">2012</span>, <span class="dv">2013</span>, <span class="dv">2014</span>, <span class="dv">2015</span>, <span class="dv">2016</span>, <span class="dv">2017</span>, <span class="dv">2018</span>, <span class="dv">2019</span>, <span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>)</span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>To merge the files together in R,there are two ways for your to do this:</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>you can use the bind_rows function, but this approach is only convenient when you don't have so much of the files, and the process can be a little bit of messy</span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>qcew_data_2009 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/outcome/2009_qcew.csv"</span>)</span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>qcew_data_2010 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/outcome/2010_qcew.csv"</span>)</span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>qcew_combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(qcew_data_2009, qcew_data_2010, ...)</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>When you have many of the years, you can setup a list, and directly merge all the files in the list</span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>file_list <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"data/outcome/"</span>, years, <span class="st">"_qcew.csv"</span>)</span>
-<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>qcew_combined <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(file_list, read_csv)</span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>📌 If you encounter an error during this step, check:</span>
-<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>(1) whether the file names are correct, and</span>
-<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>(2) whether the files have matching column structures.</span>
-<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>💭 In this section, I demonstrated how to combine separate files into a single dataset. Now, try the opposite—splitting a dataset into parts.</span>
-<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>Also, take a moment to reflect:</span>
-<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a> Under what assumptions is it appropriate to combine datasets?</span>
-<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a> When might it be better to keep them separate?</span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Identifying the Data"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2025-06-24"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  warning: false</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">  message: false</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">  eval: false</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🎯 Purpose</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>The purpose of this page is to provide an introduction to the data access process when starting a research project. We'll walk through key steps and tools you'll need to locate and retrieve meaningful data from public sources like the U.S. Census.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>This page covers:</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>️ An introduction to census data: what it is and why we use it\</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>How to identify and select the *right* dataset for your research question\</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Common issues you might encounter---and how to troubleshoot them</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">### What is Census data? Why we use it</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>Census data are official statistics collected systematically by governments to capture demographic, economic, and social information about the population <span class="ot">[^1]</span>.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ot">[^1]: </span><span class="co">[</span><span class="ot">What is Census?</span><span class="co">](https://education.nationalgeographic.org/resource/census-article/)</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>Census data is a powerful resource for researchers for several key reasons:</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Longitudinal Coverage**\</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    Offers data across many years, making it ideal for studying trends over time.</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Relatively Clean Format**\</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    Public-use datasets are well-documented and often come pre-processed, saving time on data wrangling.</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**Rich, Multi-Dimensional Information**\</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    Includes demographic, economic, housing, and geographic variables---useful across many research fields.</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Representative Sample**\</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    Designed to reflect the broader population, allowing for generalizable insights.</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### Source of Census Data</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>Census and survey data can be accessed from a variety of sources depending on your research needs:</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>1.**Public Agencies**</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Bureau of Labor Statistics (BLS)**\</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    Employment, wages, and unemployment rates from datasets such as:</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>CPS (Current Population Survey)\</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>QCEW (Quarterly Census of Employment and Wages)\</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>LAUS (Local Area Unemployment Statistics)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Census Bureau**\</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    Population, economic, housing data from:</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>ACS (American Community Survey)\</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>Decennial Census\</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>SIPP (Survey of Income and Program Participation)</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Federal Reserve**\</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    Financial and consumer data, including:</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>FRED (Federal Reserve Economic Data)\</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>SCF (Survey of Consumer Finances)</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**International Organizations**</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Global development indicators and demographic data (e.g., World Bank, IMF, UN)</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>**State Government**</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>State-level data on employment, education, health, and more</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>**Academic Data Archives**</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**IPUMS** -- Integrated Public Use Microdata Series for harmonized census and survey data</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>**Direct Data Requests**</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Custom requests through data repositories or agency contacts</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="fu">### How to Identify Key Information in a Dataset</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Geographical &amp; Temporal Coverage**  </span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>  National, regional, state, or local levels  </span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>  Annual, quarterly, monthly, or one-time collection</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Variable Definitions**  </span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>  Understand how variables are constructed (e.g., age groups, inflation-adjusted prices)</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Survey Design &amp; Dataset Type**  </span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>  Cross-sectional vs. longitudinal  </span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>  Sample design: random, stratified, weighted</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tips for selecting the right dataset </span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identify the core variables needed for your research</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Match the dataset’s geography and time coverage to your question</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Look for unique identifiers (e.g., FIPS codes) to support merging</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Choose datasets that are easy to access and compatible with your tools</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>📌 When collecting data, it’s common to realize that no single dataset contains everything you need. A practical approach is to:</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Assess what’s possible** with the data you already have.</span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Identify complementary datasets** that can be merged — this is especially helpful when working with aggregate-level data.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

@@ -76,3 +76,26 @@ Census and survey data can be accessed from a variety of sources depending on yo
 -   Custom requests through data repositories or agency contacts
 
 ### How to Identify Key Information in a Dataset
+
+- **Geographical & Temporal Coverage**  
+  National, regional, state, or local levels  
+  Annual, quarterly, monthly, or one-time collection
+
+- **Variable Definitions**  
+  Understand how variables are constructed (e.g., age groups, inflation-adjusted prices)
+
+- **Survey Design & Dataset Type**  
+  Cross-sectional vs. longitudinal  
+  Sample design: random, stratified, weighted
+  
+### Tips for selecting the right dataset 
+
+- Identify the core variables needed for your research
+- Match the dataset’s geography and time coverage to your question
+- Look for unique identifiers (e.g., FIPS codes) to support merging
+- Choose datasets that are easy to access and compatible with your tools
+
+📌 When collecting data, it’s common to realize that no single dataset contains everything you need. A practical approach is to:
+
+1. **Assess what’s possible** with the data you already have.
+2. **Identify complementary datasets** that can be merged — this is especially helpful when working with aggregate-level data.

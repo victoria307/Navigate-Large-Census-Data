@@ -8,23 +8,122 @@ execute:
   eval: false
 ---
 
-## Quarto
+## 🎯 Purpose
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+The purpose of this page is to introduce to you two ways which we can use to access the data, and lead you through the process of accessing the data with API. The two ways are : 
 
-## Running Code
+1. **directly download**
+2. **Using API and R packages**
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+### Things to check wen downloading data from website
+
+- **Data Format**  
+  Choose the format that fits your software:  
+  Use `.dta` for Stata users, or `.csv` if you're working in R, Python, or Excel.
+
+- **Allocated Values**  
+  These are values filled in by the agency when responses are missing—essentially informed guesses to complete the dataset.
+
+- **Missing Values**  
+  Check whether sufficient data was collected for your year of interest. Sparse responses may lead to smaller or less reliable samples.
+
+- **Time Coverage & Consistency**  
+  Some datasets are only available for select years, and some variables are only asked in certain periods. Always confirm that your key variables are consistently available over time.
+  
+### Use R Packages and APIS
+
+**API (Application Programming Interface)**:  
+In simple terms, an API is like a personal key that lets two programs connect and share information automatically. It allows you to access data from websites or services without manually downloading files.
+
+Here’s a general workflow when working with APIs:
+
+1. **Register for an API key**  
+   Most data providers require you to sign up and get a unique key to use their API.
+
+2. **Install and load the necessary packages**  
+   Use libraries designed to connect with the API (e.g., `blsAPI`, `ipumsr`, `tidycensus`).
+
+3. **Load the codebook or metadata**  
+   Understand variable names, formats, and query structures.
+
+4. **Run API calls** to retrieve your data into R or another platform.
+
+📌 If there’s no official package for the API you want to use, check **GitHub**—many developers create open-source packages or wrappers that simplify the process.
+
+#### Use the BLS API to retrieve the data
 
 ```{r}
-1 + 1
+# Set the library and install the packages
+library(devtools)
+library(blsR)
+
+# The introduction about this package: https://cran.r-project.org/web/packages/blsR/blsR.pdf
+devtools::install_github("groditi/blsR")
+
+# Acquire the API by registering through https://www.bls.gov/developers/home.htm
+bls_set_key("your personal API")
+
+test_series <- get_series(series_id = "series id you found", 
+                         start_year = 2016, 
+                         end_year = 2024, 
+                         api_key = bls_get_key())
 ```
 
-You can add options to executable code like this
+I work through the series number by https://data.bls.gov/PDQWeb/la, and we discover that the series number for each county is "FCN+Fips code+00000000"
+
+#### ACS API
 
 ```{r}
-#| echo: false
-2 * 2
+# Set the library and install the packages
+library(censusapi)
+library(tidycensus) 
+
+# Acquire the API by registering through https://api.census.gov/data/key_signup.html
+
+census_api_key("your api key", install = TRUE, overwrite = TRUE)
+# Acquire the API by registering through https://api.census.gov/data/key_signup.html
+
+#The main function to retrive the data here are https://cran.r-project.org/web/packages/tidycensus/tidycensus.pdf
+
+#to check the name of the variable
+v15 <- load_variables(2015, "acs5", cache = TRUE)
+View(v15)
+
+# for example, if I want to know the age
+# here is the explanation of the codebook: https://data.census.gov/table/ACSDT5Y2022.B01001
+
+nc_acs_2015 <- get_acs(geography = "county", 
+              year = 2015,
+              variables = c(age = "B01001A_003"), 
+              state = "NC",
+              survey = "acs5",
+              output = "wide")
+
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## 🔌 Troubleshooting 
+
+### Issue 1: Choose Between 1-Year vs 5- Year ACS Estimate
+
+When we look into one of the most commonly used census data, ACS (American Community Survey), we will see that there are one year, 3 year and 5 year, which one we should go for? 
+
+The difference between these three can be divided into 3 dimension: geographical coverage, reliability, and recency [^1]
+
+- **area coverage** : 1 year < 3 year< 5 year
+
+1 year census only cover area with population of 65,000+, 3 year covers areas with population of 20,000+, and 5 year covers all the areas
+
+- **reliability** : 1 year < 3 year < 5 year 
+
+The intuition is that smaller sample sizes lead to higher margins of error. The margin of error reflects how well the sample represents the population—when the sample size is small, its representativeness decreases, increasing the likelihood of sampling error. [^2]
+
+- **recency** : 1 year > 3 year > 5 year
+
+A shorter sampling duration typically allows for earlier data publication.
+
+📌 In such cases, we typically rely on the 5-year Census estimates for greater data reliability. However, if a major policy change occurs, the 1-year estimates are better suited to capture its immediate impact. [^2]
+
+
+[^1] [Using 1-Year or 5-Year American Community Survey Data](https://www.census.gov/programs-surveys/acs/guidance/estimates.html)
+
+[^2] [U.S. Census Bureau American Community Survey (ACS) 1-Year vs. 5-Year Estimates](https://help.mysidewalk.com/en/articles/2581167-u-s-census-bureau-american-community-survey-acs-1-year-vs-5-year-estimates)
